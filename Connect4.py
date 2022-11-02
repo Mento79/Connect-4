@@ -84,21 +84,33 @@ def tab1():
                                       stary + (49.5 * scale), fill="", outline="#e3c559", width="2")
               board[(board_height-1) - col[i]][i] = 2
           #hntcheck hina
-          check()
-          color = not color
-          hover_draw(i)
           col[i]+=1
+          finshed=True
+          for temp in col:
+              if temp < board_height:
+                  finshed=False
+                  break
+          if(finshed):
+              check()
+              hover_clear()
+          else:
+              color = not color
+              hover_draw(i)
           #print(board)
 
+      def hover_clear():
+          for j in range(0,board_width):
+              y = 0
+              x = j * (2 + square_length)
+              mycanvas.create_oval(x + 1, y + 1, x + (square_length) - 2, y + (square_length) - 2, fill="black",width="0")
       def hover_draw (i):
+
           #print (i , j, 5-col[i] )
           global color
           starx = i * (2 + square_length) + (star_x_shift)
           y = 0
           stary = (star_y_shift)
-          for j in range(0,board_width):
-              x = j * (2 + square_length)
-              mycanvas.create_oval(x + 1, y + 1, x + (square_length) - 2, y + (square_length) - 2, fill="black",width="0")
+          hover_clear()
           x = i * (2 + square_length)
           if(color):
               mycanvas.create_oval(x + 1, y + 1, x + (square_length) - 2, y + (square_length) - 2, fill=red,width="0")
@@ -118,27 +130,37 @@ def tab1():
           #print(board)
 
       def check():
-          piece= 1 if color else 2
+          red=0
+          yellow=0
           #down
           for i in range(board_height-3):
             for j in range(board_width):
-              if(board[i][j]==piece and board[i+1][j]==piece and board[i+2][j]==piece and board[i+3][j]==piece):
-                  print( "kisbnaaaaaa ta7t" , i ,j ,piece,board)
+              if(board[i][j]==1 and board[i+1][j]==1 and board[i+2][j]==1 and board[i+3][j]==1):
+                  red+=1
+              if(board[i][j]==2 and board[i+1][j]==2 and board[i+2][j]==2 and board[i+3][j]==2):
+                  yellow+=1
           #right and left
           for i in range(board_height):
               for j in range(board_width-3):
-                  if (board[i][j] == piece and board[i][j+1] == piece and board[i][j+2] == piece and board[i][j+3] == piece):
-                      print("kisbnaaaaaa 3la nafs el5t",i,j)
+                  if (board[i][j] == 1 and board[i][j+1] == 1 and board[i][j+2] == 1 and board[i][j+3] == 1):
+                      red += 1
+                  if (board[i][j] == 2 and board[i][j+1] == 2 and board[i][j+2] == 2 and board[i][j+3] == 2):
+                      yellow += 1
           #digonally
           for i in range(board_width-3):
               for j in range (board_height-3):
-                  if (board[j][i] == piece and board[j+1][i+1] == piece and board[j+2][i+2] == piece and board[j+3][i+3] == piece):
-                      print("kisbnaaaaaa diagonal tal3 4imal")
+                  if (board[j][i] == 1 and board[j+1][i+1] == 1 and board[j+2][i+2] == 1 and board[j+3][i+3] == 1):
+                      red += 1
+                  if (board[j][i] == 2 and board[j+1][i+1] == 2 and board[j+2][i+2] == 2 and board[j+3][i+3] == 2):
+                      yellow += 1
           #reverse diagonal
           for i in range(board_width-3):
               for j in range (board_height-1,board_height-4,-1):
-                  if (board[j][i] == piece and board[j-1][i+1] == piece and board[j-2][i+2] == piece and board[j-3][i+3] == piece):
-                      print("kisbnaaaaaa diagonal tale3 ymin")
+                  if (board[j][i] == 1 and board[j-1][i+1] == 1 and board[j-2][i+2] == 1 and board[j-3][i+3] == 1):
+                      red += 1
+                  if (board[j][i] == 2 and board[j-1][i+1] == 2 and board[j-2][i+2] == 2 and board[j-3][i+3] == 2):
+                      yellow += 1
+          print("Red     ",red," - ",yellow,"    yellow")
 
       for i in range (0,board_height):
           y = i * (2+square_length)+square_length
@@ -150,7 +172,7 @@ def tab1():
               arr_circles[i].append(mycanvas.create_oval(x +1 , y +1 , x + (square_length) -2, y +(square_length) -2 ,fill="black" ,width = "0"))
               board[i].append(0)
               mycanvas.tag_bind(arr_circles[i][j],"<Button-1>",lambda x: draw(x.x//square_length,x.y//square_length))
-              mycanvas.tag_bind(arr_circles[i][j],"<Enter>",lambda x:hover_draw (x.x//square_length))
+              mycanvas.tag_bind(arr_circles[i][j],"<Enter>",lambda x:hover_draw (x.x//(square_length+2)))
 
       button1.destroy()
       button2.destroy()
