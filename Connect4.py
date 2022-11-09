@@ -1,5 +1,5 @@
 from tkinter import *
-
+from heusrtic import *
 arr=[[0,6,2],[3,5,8],[4,6,7]]
 
 arr_numbers=[[],[],[]]
@@ -55,7 +55,6 @@ def tab1():
           buttonmove.destroy()
           tab1()
 
-
       def auto():
           while counter < len(moves_arr):
               next()
@@ -84,6 +83,10 @@ def tab1():
                                       stary + (49.5 * scale), fill="", outline="#e3c559", width="2")
               board[(board_height-1) - col[i]][i] = 2
           #hntcheck hina
+          if(color):
+           column2=mini_max(board,2,True)
+           print(column2)
+         # print(column2)
           col[i]+=1
           finshed=True
           for temp in col:
