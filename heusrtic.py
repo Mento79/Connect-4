@@ -30,7 +30,6 @@ def heuristic():
 
 def start_minmax(Board,depth,maximing_player):
     state = State.State(Board)
-    print(Board)
     return mini_max(state,depth,maximing_player);
 
 

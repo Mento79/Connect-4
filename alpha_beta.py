@@ -30,7 +30,6 @@ def heuristic():
 def start2_minmax(Board,depth,alpha,beta,maximing_player):
 
     state = State.State(Board)
-    print("mm")
     return mini_max(state,depth,alpha,beta,maximing_player);
 
 def mini_max(Board, depth, alpha, beta,maximizing_player):
@@ -41,7 +40,7 @@ def mini_max(Board, depth, alpha, beta,maximizing_player):
         value = -math.inf
         for col2 in valid_location:
             # b_copy = copy.deepcopy(Board)
-            b_copy = State.State(Board, col2, 1)
+            b_copy = State.State(None, Board, col2, 1)
             # drop_piece(b_copy, get_next_open_row(Board, col2), col2, 2)
             new_value, temp = mini_max(b_copy, depth - 1, alpha, beta, False)
             if (new_value > value):
@@ -53,7 +52,7 @@ def mini_max(Board, depth, alpha, beta,maximizing_player):
     else:
         value = math.inf
         for col2 in valid_location:
-            b_copy = State.State(Board, col2, 1)
+            b_copy = State.State(None, Board, col2, 1)
             # drop_piece(b_copy, get_next_open_row(Board, col2), col2, 1)
             new_value, temp = mini_max(b_copy, depth - 1,alpha, beta, True)
             if (new_value < value):
