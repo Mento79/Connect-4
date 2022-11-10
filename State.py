@@ -1,7 +1,6 @@
 from bitarray import bitarray
 import math
 import copy
-import Model.State
 
 
 class State:
@@ -16,8 +15,8 @@ class State:
         self.NoBitsOfNoC = math.floor(math.log2(self.NoRows)) + 1
 
         self.A: bitarray = (self.NoColomns*(self.NoBitsOfNoC+self.NoRows)) * bitarray('0')
-        self.parent : Model.State.State = None
-        self.children : list[Model.State.State] = []
+        self.parent : State = None
+        self.children : list[State] = []
         self.hvalue = None
 
         for i in range(self.NoColomns):
@@ -31,9 +30,9 @@ class State:
 
 
 
-    def __init__(self, prevState:State, where: int, what):
+    def __init__(self, prevState, where: int, what):
         self.parent = prevState
-        self.children : list[Model.State.State] = []
+        self.children : list[State] = []
         self.parent.children.append(self)
         self.hvalue = None
 

@@ -1,7 +1,7 @@
 import math
 import copy
 import random
-from Model import State
+import State
 
 # def get_next_open_row(board :State, col):
 #     for r in range(5, -1, -1):
