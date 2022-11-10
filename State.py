@@ -36,11 +36,11 @@ class State:
         self.hvalue = None
 
         for i in range(self.NoColomns):
-            for j in range(self.NoRows):
+            for j in range(self.NoRows-1, -1 , -1):
                 if board[j][i] == 0:
                     break
                 else:
-                    self.addToColomn(j, board[j][i]-1)
+                    self.addToColomn(i, board[j][i]-1)
 
     def addToColomn(self, where: int, what):
         start = self.NoBitsOfNoC * where
@@ -58,9 +58,11 @@ class State:
 
     def bitsToInt(self, bitArray):
         res = int("".join(str(x) for x in bitArray), 2)
+        #(res, bitArray)
         return res
 
     def intToBits(self, number):
+        n2 = number
         res = self.NoBitsOfNoC * bitarray('0')
         for i in range(self.NoBitsOfNoC - 1, -1, -1):
             res[i] = int(number) % 2
@@ -75,12 +77,9 @@ class State:
             return None
 
     def set(self, row, colomn, value):
-        if self.checkCell(row, colomn):
-            index = self.NoColomns * (self.NoBitsOfNoC + row) + colomn
-            self.A[index] = value
-            return True
-        else:
-            return False
+        index = self.NoColomns * (self.NoBitsOfNoC + row) + colomn
+        self.A[index] = value
+
 
     def checkCell(self, row, colomn):
         if row >= self.NoRows or colomn >= self.NoColomns:
@@ -98,7 +97,7 @@ class State:
             return False
 
         start = self.NoBitsOfNoC * colomn
-        inwhere = self.bitsToInt(self.A[start:start + self.NoBitsOfNoC])
+        inwhere = self.bitsToInt(self.A[start:start+self.NoBitsOfNoC])
         if self.NoRows == inwhere:
             return False
         else:
