@@ -22,8 +22,8 @@ def get_valid_locations(Board:State):
     return valid_locations
 
 
-def drop_piece(board, row, col, piece):
-    board[row][col] = piece
+# def drop_piece(board, row, col, piece):
+#     board[row][col] = piece
 
 
 def heuristic():
