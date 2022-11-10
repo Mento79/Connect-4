@@ -10,18 +10,28 @@ class State:
         + 2d array of bits => NoColomns* NoRows
     """
 
-    def __init__(self, NoColomns, NoRows):
-        self.NoRows = NoRows
-        self.NoColomns = NoColomns
-        self.NoBitsOfNoC = math.floor(math.log2(NoRows)) + 1
+    def __init__(self, board: [[int]]):
+        self.NoRows = len(board)
+        self.NoColomns = len(board[0])
+        self.NoBitsOfNoC = math.floor(math.log2(self.NoRows)) + 1
 
-        self.A: bitarray = (NoColomns*(self.NoBitsOfNoC+NoRows)) * bitarray('0')
+        self.A: bitarray = (self.NoColomns*(self.NoBitsOfNoC+self.NoRows)) * bitarray('0')
         self.parent : Model.State.State = None
         self.children : list[Model.State.State] = []
         self.hvalue = None
 
+        for i in range(self.NoColomns):
+            for j in range(self.NoRows):
+                if board[j][i] == 0:
+                    break
+                else:
+                    self.addToColomn(j, board[j][i])
 
-    def __init__(self, prevState:Model.State.State, where: int, what:bool):
+
+
+
+
+    def __init__(self, prevState:Model.State.State, where: int, what):
         self.parent = prevState
         self.children : list[Model.State.State] = []
         self.parent.children.append(self)
@@ -33,15 +43,18 @@ class State:
         self.NoBitsOfNoC = prevState.NoBitsOfNoC
 
         self.A = copy.deepcopy(prevState.A)
+        self.addToColomn(where,what)
 
+
+
+    def addToColomn(self, where: int, what):
         start = self.NoBitsOfNoC*where
         inwhere = self.bitsToInt(self.A[start:start+self.NoBitsOfNoC])
-        self.set(inwhere, where, what)
-
         draft = self.intToBits(inwhere+1)
         for i in range(start, start+self.NoBitsOfNoC):
             self.A[i] = draft[i-start]
 
+        self.set(inwhere, where, what)
 
 
 

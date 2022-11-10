@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d73b8a12-96c2-4086-948f-26db06bfa253" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Answer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Fringe.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/PuzzleBoard.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/BoardServices.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/FringeFactory.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/SearchAgent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/SearchStrategy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/State.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
