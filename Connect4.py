@@ -1,6 +1,8 @@
 from tkinter import *
 from heusrtic import *
+
 class game:
+
     def __init__(self):
         #Colors
         self.red_border="#a42b39"
@@ -113,6 +115,7 @@ class game:
                                     starx + (2.5 * self.scale), stary + (19.5 * self.scale), starx + (40 * self.scale),
                                     stary + (49.5 * self.scale), fill="", outline=self.yellow_border, width="2")
 
+
     def check(self):
         red=0
         yellow=0
@@ -170,5 +173,3 @@ class game:
       button1 = Button(self.root, text='BFS', command=lambda:[self.draw_board()], bg=self.background_color, fg=self.board_color, height = 2, width = 8)
       button1.place(x=500,y=900)
       self.root.mainloop()
-
-
