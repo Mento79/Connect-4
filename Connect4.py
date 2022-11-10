@@ -24,11 +24,8 @@ canvas_width=board_width*square_length+board_width
 canvas_height=(board_height+1)*square_length +(4*board_height)
 print(canvas_height)
 board=[]
-print(board)
 arr_circles=[[]*board_width]
-print (arr_circles)
 col=[0] * board_width
-print (col)
 
 counter = 1
 
@@ -48,19 +45,7 @@ def tab1():
       mycanvas = Canvas(root, width=canvas_width+(square_stroke*3), height=canvas_height+(square_stroke*3),bd=0,highlightthickness=0, bg="black")
       mycanvas.pack(pady=20)
       global counter
-
-      def back():
-          button4.destroy()
-          mycanvas.destroy()
-          buttonmove.destroy()
-          tab1()
-
-      def auto():
-          while counter < len(moves_arr):
-              next()
-      def draw (i, j ):
-          print (i , j )
-          print (i , j, (board_height-1)-col[i] )
+      def draw (i):
           global color
           x = i * (2 + square_length)
           starx = i * (2 + square_length) + (star_x_shift)
@@ -82,11 +67,6 @@ def tab1():
                                       starx + (2.5 * scale), stary + (19.5 * scale), starx + (40 * scale),
                                       stary + (49.5 * scale), fill="", outline="#e3c559", width="2")
               board[(board_height-1) - col[i]][i] = 2
-          #hntcheck hina
-          if(color):
-           column2=mini_max(board,2,True)
-           print(column2)
-         # print(column2)
           col[i]+=1
           finshed=True
           for temp in col:
@@ -98,8 +78,9 @@ def tab1():
               hover_clear()
           else:
               color = not color
-              hover_draw(i)
-          #print(board)
+              if (not color):
+                  temp ,column2 = mini_max(board, 2, True)
+                  draw(column2)
 
       def hover_clear():
           for j in range(0,board_width):
@@ -107,8 +88,6 @@ def tab1():
               x = j * (2 + square_length)
               mycanvas.create_oval(x + 1, y + 1, x + (square_length) - 2, y + (square_length) - 2, fill="black",width="0")
       def hover_draw (i):
-
-          #print (i , j, 5-col[i] )
           global color
           starx = i * (2 + square_length) + (star_x_shift)
           y = 0
@@ -174,7 +153,7 @@ def tab1():
               mycanvas.create_rectangle(x , y , x + (square_length) , y +(square_length) , outline=foreground_color, fill=foreground_color ,width = "2")
               arr_circles[i].append(mycanvas.create_oval(x +1 , y +1 , x + (square_length) -2, y +(square_length) -2 ,fill="black" ,width = "0"))
               board[i].append(0)
-              mycanvas.tag_bind(arr_circles[i][j],"<Button-1>",lambda x: draw(x.x//square_length,x.y//square_length))
+              mycanvas.tag_bind(arr_circles[i][j],"<Button-1>",lambda x: draw(x.x//square_length))
               mycanvas.tag_bind(arr_circles[i][j],"<Enter>",lambda x:hover_draw (x.x//(square_length+2)))
 
       button1.destroy()
