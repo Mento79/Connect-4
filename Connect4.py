@@ -45,7 +45,7 @@ class game:
 
         #Creating tkinter root
         self.root = Tk()
-        self.root.minsize(height=self.canvas_height+300,width=self.canvas_width+300)
+        self.root.minsize(height=700,width=1000)
         self.root.option_add('*Font', '20')
         self.root.configure(background=self.background_color)
         self.mycanvas=None
@@ -153,6 +153,7 @@ class game:
 
 
     def draw_board(self):
+        self.root.minsize(height=self.canvas_height+300,width=self.canvas_width+300)
         self.mycanvas = Canvas(self.root, width=self.canvas_width+(self.square_stroke*3), height=self.canvas_height+(self.square_stroke*3),bd=0,highlightthickness=0, bg=self.background_color)
         self.mycanvas.pack(pady=20)
         for i in range (0,self.board_height):
@@ -173,5 +174,5 @@ class game:
       mylabel2.pack()
       mylabel2.place(x=170, y=80)
       button1 = Button(self.root, text='BFS', command=lambda:[self.draw_board()], bg=self.background_color, fg=self.board_color, height = 2, width = 8)
-      button1.place(x=500,y=900)
+      button1.place(x=500,y=500)
       self.root.mainloop()
