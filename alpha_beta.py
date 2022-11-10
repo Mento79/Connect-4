@@ -14,7 +14,6 @@ import State
 
 def get_valid_locations(Board:State):
     valid_locations = []
-
     for col in range(Board.NoColomns):
         if Board.check_column(col):
             valid_locations.append(col)
@@ -28,7 +27,7 @@ def get_valid_locations(Board:State):
 def heuristic():
     return random.random()
 
-def start_minmax(Board,depth,alpha,beta,maximing_player):
+def start2_minmax(Board,depth,alpha,beta,maximing_player):
     state = State.State(Board)
     mini_max(state,depth,alpha,beta,maximing_player);
 

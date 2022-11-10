@@ -84,9 +84,9 @@ class game:
         else:
             self.color = not self.color
             if (not self.color):
-                # temp ,column2 = mini_max(self.board, 2, True)
-                temp ,column2 = mini_max(self.board, 2,-math.inf,math.inf, True)
-                self.draw(column2)
+                 temp ,colun2 = start_minmax(self.board, 2, True)
+                # temp ,column2 = start2_minmax(self.board, 2,-math.inf,math.inf, True)
+                 self.draw(colun2)
 
 
     def hover_clear(self):
