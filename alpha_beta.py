@@ -28,8 +28,10 @@ def heuristic():
     return random.random()
 
 def start2_minmax(Board,depth,alpha,beta,maximing_player):
+
     state = State.State(Board)
-    mini_max(state,depth,alpha,beta,maximing_player);
+    print("mm")
+    return mini_max(state,depth,alpha,beta,maximing_player);
 
 def mini_max(Board, depth, alpha, beta,maximizing_player):
     valid_location = get_valid_locations(Board)

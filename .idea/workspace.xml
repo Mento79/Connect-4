@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d73b8a12-96c2-4086-948f-26db06bfa253" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Connect4.py" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/State.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpha_beta.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpha_beta.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/heusrtic.py" beforeDir="false" afterPath="$PROJECT_DIR$/heusrtic.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,9 +31,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/PyCharmCE2022.2/python_stubs/44485656/bitarray/__init__.py" root0="SKIP_INSPECTION" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -53,9 +52,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\abdel\AppData\Local\Programs\Python\Python39\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -89,5 +88,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

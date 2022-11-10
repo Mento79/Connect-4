@@ -40,7 +40,7 @@ class State:
                 if board[j][i] == 0:
                     break
                 else:
-                    self.addToColomn(j, board[j][i])
+                    self.addToColomn(j, board[j][i]-1)
 
     def addToColomn(self, where: int, what):
         start = self.NoBitsOfNoC * where
