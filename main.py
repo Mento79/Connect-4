@@ -1,11 +1,3 @@
-import Controller
-import GUI
-import Connect4
-
-
-gui = GUI.GUI()
-gui.home()
-
-gui.root.mainloop()
-
-
+from Connect4 import *
+game = game()
+game.main_menu()
