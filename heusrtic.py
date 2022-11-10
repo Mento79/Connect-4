@@ -42,7 +42,7 @@ def mini_max(Board:State, depth, maximizing_player):
         value = -math.inf
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
-            b_copy = State.State(Board,col2,1)
+            b_copy = State.State(None,Board,col2,1)
             # drop_piece(b_copy, row, col2, 2)
             new_score, temp = mini_max(b_copy, depth - 1, False)
             if (new_score > value):
@@ -53,7 +53,7 @@ def mini_max(Board:State, depth, maximizing_player):
         value = math.inf
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
-            b_copy = State.State(Board, col2, 0)
+            b_copy = State.State(None,Board, col2, 0)
             # drop_piece(b_copy, row, col2, 1)
             new_score, temp = mini_max(b_copy, depth - 1, True)
             if (new_score < value):
