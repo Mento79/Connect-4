@@ -1,6 +1,5 @@
 from bitarray import bitarray
 import math
-import copy
 import Model.State
 
 
@@ -16,23 +15,14 @@ class State:
         self.NoBitsOfNoC = math.floor(math.log2(NoRows)) + 1
 
         self.A: bitarray = (NoColomns*(self.NoBitsOfNoC+NoRows)) * bitarray('0')
-        self.parent : Model.State.State = None
-        self.children : list[Model.State.State] = []
-        self.hvalue = None
 
 
     def __init__(self, prevState:Model.State.State, where: int, what:bool):
-        self.parent = prevState
-        self.children : list[Model.State.State] = []
-        self.parent.children.append(self)
-        self.hvalue = None
-
-
         self.NoRows = prevState.NoRows
         self.NoColomns = prevState.NoColomns
         self.NoBitsOfNoC = prevState.NoBitsOfNoC
 
-        self.A = copy.deepcopy(prevState.A)
+        self.A = prevState.A.copy()
 
         start = self.NoBitsOfNoC*where
         inwhere = self.bitsToInt(self.A[start:start+self.NoBitsOfNoC])
@@ -58,29 +48,9 @@ class State:
 
 
     def get(self, row, colomn):
-        if self.checkCell(row,colomn):
-            index = self.NoColomns*(self.NoBitsOfNoC + row) + colomn
-            return self.A[index]
-        else:
-            return None
+        index = self.NoColomns*(self.NoBitsOfNoC + row) + colomn
+        return self.A[index]
 
     def set(self, row, colomn, value):
-        if self.checkCell(row,colomn):
-            index = self.NoColomns * (self.NoBitsOfNoC + row) + colomn
-            self.A[index] = value
-            return True
-        else:
-            return False
-
-
-
-    def checkCell(self,row, colomn):
-        if row>=self.NoRows or colomn>=self.NoColomns:
-            return False
-
-        start = self.NoBitsOfNoC * colomn
-        inwhere = self.bitsToInt(self.A[start:start + self.NoBitsOfNoC])
-        if row >= inwhere:
-            return False
-        else:
-            return True
+        index = self.NoColomns*(self.NoBitsOfNoC + row) + colomn
+        self.A[index] = value
