@@ -80,8 +80,10 @@ class game:
         for temp in self.col:
             if temp < self.board_height:
                 finshed=False
+                # print("loooool",self.board_height)
                 break
         if(finshed):
+            # print("XXXXD")
             self.check()
             self.hover_clear()
         else:
@@ -155,6 +157,23 @@ class game:
                 if (self.board[j][i] == 2 and self.board[j-1][i+1] == 2 and self.board[j-2][i+2] == 2 and self.board[j-3][i+3] == 2):
                     yellow += 1
         print("Red     ",red," - ",yellow,"    yellow")
+        top = Toplevel(self.root)
+        top.configure(background=self.background_color)
+        top.geometry("500x250")
+        top.title("Result")
+        if yellow > red:
+            Label(top, text="Yellow win!", fg="yellow",
+                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
+            Label(top, text="You are beaten by machine XD", fg="#BB86FC",
+                  bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
+        elif red > yellow:
+            Label(top, text="Red win!", fg="red",
+                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
+            Label(top, text="ya 7lewetak ya 7lewetak", fg="#BB86FC",
+                  bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
+        else:
+            Label(top, text="Draw!", fg="#BB86FC",
+                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
 
     def back_to_menu(self, back_button: Button):
         self.mycanvas.destroy()
@@ -185,49 +204,55 @@ class game:
         self.board_height = height
         self.board_width = width
         self.Mini_Max_Depth = depth
-        # print(f"{height} {width} {depth}")
+        # print(f"\t\t\t{height} {width} {depth}")
         for obj in list_destroy:
             obj.destroy()
         self.draw_board()
+
     def draw_main_menu(self):
-        list_distroy = []
-        #730
+        # top = Toplevel(self.root)
+        # top.geometry("500x250")
+        # top.title("Child Window")
+        list_destroy = []
         input_x = 550
         label_width = Label(self.root, bg=self.background_color, fg="#BB86FC",text="Width")
         label_width.place(x=input_x, y=190)
-        spin_box_width = Spinbox(self.root,from_=1, to=3000,textvariable=StringVar(value=0),wrap=True, fg="#6200EE", width=5)
+        spin_box_width = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0),wrap=True, fg="#6200EE",
+                                 width=5)
         spin_box_width.place(x=input_x, y=210)
         label_height = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Height")
         label_height.place(x=input_x, y=240)
-        spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE", width=5)
+        spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
+                                  width=5)
         spin_box_height.place(x=input_x, y=260)
         label_depth = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Depth")
         label_depth.place(x=input_x, y=290)
         spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
-                                width=5)
+                                 width=5)
         spin_box_depth.place(x=input_x, y=310)
-        list_distroy.append(label_width)
-        list_distroy.append(spin_box_width)
-        list_distroy.append(label_height)
-        list_distroy.append(spin_box_height)
-        list_distroy.append(label_depth)
-        list_distroy.append(spin_box_depth)
-        mylabel2 = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC",
+        list_destroy.append(label_width)
+        list_destroy.append(spin_box_width)
+        list_destroy.append(label_height)
+        list_destroy.append(spin_box_height)
+        list_destroy.append(label_depth)
+        list_destroy.append(spin_box_depth)
+        my_label = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC",
                          bg=self.background_color, font=("Arial", 25))
-        mylabel2.pack()
-        mylabel2.place(x=170, y=80)
+        my_label.pack()
+        my_label.place(x=170, y=80)
         button1 = Button(self.root, text='Minimax without α-β pruning',
-                         command=lambda: [self.move_to_board(list_distroy,
+                         command=lambda: [self.move_to_board(list_destroy,
                                                              int(spin_box_width.get()), int(spin_box_depth.get()),
                                                              int(spin_box_height.get()))],
                          bg=self.background_color, fg="#6200EE", height=2, width=20)
         button1.place(x=170, y=130)
         button2 = Button(self.root, text='Minimax with α-β pruning',
-                         command=lambda: [self.move_to_board(list_distroy,int(spin_box_width.get()), int(spin_box_depth.get()),
+                         command=lambda: [self.move_to_board(list_destroy,
+                                                             int(spin_box_width.get()), int(spin_box_depth.get()),
                                                              int(spin_box_height.get()))],
                          bg=self.background_color, fg="#6200EE", height=2, width=20)
         button2.place(x=170, y=310)
-        list_distroy.append(mylabel2)
-        list_distroy.append(button1)
-        list_distroy.append(button2)
+        list_destroy.append(my_label)
+        list_destroy.append(button1)
+        list_destroy.append(button2)
         self.root.mainloop()
