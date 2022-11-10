@@ -31,7 +31,7 @@ class State:
 
 
 
-    def __init__(self, prevState:Model.State.State, where: int, what):
+    def __init__(self, prevState:State, where: int, what):
         self.parent = prevState
         self.children : list[Model.State.State] = []
         self.parent.children.append(self)
@@ -55,6 +55,12 @@ class State:
             self.A[i] = draft[i-start]
 
         self.set(inwhere, where, what)
+
+
+    # def get_next_row(self, where: int):
+    #     start = self.NoBitsOfNoC*where
+    #     inwhere = self.bitsToInt(self.A[start:start+self.NoBitsOfNoC])
+    #     return inwhere
 
 
 
@@ -94,6 +100,17 @@ class State:
         start = self.NoBitsOfNoC * colomn
         inwhere = self.bitsToInt(self.A[start:start + self.NoBitsOfNoC])
         if row >= inwhere:
+            return False
+        else:
+            return True
+
+    def check_column(self, colomn):
+        if  colomn >= self.NoColomns:
+            return False
+
+        start = self.NoBitsOfNoC * colomn
+        inwhere = self.bitsToInt(self.A[start:start + self.NoBitsOfNoC])
+        if self.NoRows == inwhere:
             return False
         else:
             return True
