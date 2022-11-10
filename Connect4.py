@@ -172,9 +172,26 @@ class game:
 
 
     def main_menu(self):
-      mylabel2 = Label(self.root, text='Choose one of the following three methods to solve the puzzle', fg=self.board_color, bg=self.background_color)
+      mylabel2 = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC", bg=self.background_color, font=("Arial", 25))
       mylabel2.pack()
       mylabel2.place(x=170, y=80)
-      button1 = Button(self.root, text='BFS', command=lambda:[self.draw_board()], bg=self.background_color, fg=self.board_color, height = 2, width = 8)
-      button1.place(x=500,y=500)
+      button1 = Button(self.root, text='Minimax without α-β pruning', command=lambda:[self.draw_board()], bg=self.background_color, fg="#6200EE", height = 2, width = 20)
+      button1.place(x=170,y=130)
+      button2 = Button(self.root, text='Minimax with α-β pruning', command=lambda: [self.draw_board()], bg=self.background_color, fg="#6200EE", height=2, width=20)
+      button2.place(x=170, y=310)
+      #730
+      input_x = 550
+      label_width = Label(self.root, bg=self.background_color, fg="#BB86FC",text="Width")
+      label_width.place(x=input_x, y=190)
+      spin_box_width = Spinbox(self.root,from_=1, to=3000,textvariable=StringVar(value=0),wrap=True, fg="#6200EE", width=5)
+      spin_box_width.place(x=input_x, y=210)
+      label_height = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Height")
+      label_height.place(x=input_x, y=240)
+      spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE", width=5)
+      spin_box_height.place(x=input_x, y=260)
+      label_depth = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Depth")
+      label_depth.place(x=input_x, y=290)
+      spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
+                                width=5)
+      spin_box_depth.place(x=input_x, y=310)
       self.root.mainloop()
