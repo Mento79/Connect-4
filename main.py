@@ -1,3 +1,3 @@
 from Connect4 import *
 game = game()
-game.main_menu()
+game.draw_main_menu()

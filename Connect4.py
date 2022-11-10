@@ -1,4 +1,6 @@
 from tkinter import *
+from typing import List
+
 from heusrtic import *
 from alpha_beta import *
 
@@ -45,10 +47,11 @@ class game:
 
         #Creating tkinter root
         self.root = Tk()
-        self.root.minsize(height=700,width=1000)
+        # self.root.minsize(height=700,width=1000)
+        self.root.minsize(height=450, width=800)
         self.root.option_add('*Font', '20')
         self.root.configure(background=self.background_color)
-        self.mycanvas=None
+        self.mycanvas: Canvas=None
 
 
     def draw (self,i):
@@ -153,10 +156,18 @@ class game:
                     yellow += 1
         print("Red     ",red," - ",yellow,"    yellow")
 
+    def back_to_menu(self, back_button: Button):
+        self.mycanvas.destroy()
+        back_button.destroy()
+        self.draw_main_menu()
 
     def draw_board(self):
         self.root.minsize(height=self.canvas_height+300,width=self.canvas_width+300)
         self.mycanvas = Canvas(self.root, width=self.canvas_width+(self.square_stroke*3), height=self.canvas_height+(self.square_stroke*3),bd=0,highlightthickness=0, bg=self.background_color)
+        back_button = Button(self.root, text='Menu',
+                         command=lambda: [self.back_to_menu(back_button)],
+                         bg=self.background_color, fg="#6200EE", height=2, width=10)
+        back_button.place(x=10, y=10)
         self.mycanvas.pack(pady=20)
         for i in range (0,self.board_height):
             y = i * (2+self.square_length)+self.square_length
@@ -170,28 +181,53 @@ class game:
                 self.mycanvas.tag_bind(self.arr_circles[i][j],"<Button-1>",lambda x: self.draw(x.x//self.square_length))
                 self.mycanvas.tag_bind(self.arr_circles[i][j],"<Enter>",lambda x:self.hover_draw (x.x//(self.square_length+2)))
 
-
-    def main_menu(self):
-      mylabel2 = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC", bg=self.background_color, font=("Arial", 25))
-      mylabel2.pack()
-      mylabel2.place(x=170, y=80)
-      button1 = Button(self.root, text='Minimax without α-β pruning', command=lambda:[self.draw_board()], bg=self.background_color, fg="#6200EE", height = 2, width = 20)
-      button1.place(x=170,y=130)
-      button2 = Button(self.root, text='Minimax with α-β pruning', command=lambda: [self.draw_board()], bg=self.background_color, fg="#6200EE", height=2, width=20)
-      button2.place(x=170, y=310)
-      #730
-      input_x = 550
-      label_width = Label(self.root, bg=self.background_color, fg="#BB86FC",text="Width")
-      label_width.place(x=input_x, y=190)
-      spin_box_width = Spinbox(self.root,from_=1, to=3000,textvariable=StringVar(value=0),wrap=True, fg="#6200EE", width=5)
-      spin_box_width.place(x=input_x, y=210)
-      label_height = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Height")
-      label_height.place(x=input_x, y=240)
-      spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE", width=5)
-      spin_box_height.place(x=input_x, y=260)
-      label_depth = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Depth")
-      label_depth.place(x=input_x, y=290)
-      spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
+    def move_to_board(self, list_destroy: List, width: int, depth: int, height: int) -> None:
+        self.board_height = height
+        self.board_width = width
+        self.Mini_Max_Depth = depth
+        # print(f"{height} {width} {depth}")
+        for obj in list_destroy:
+            obj.destroy()
+        self.draw_board()
+    def draw_main_menu(self):
+        list_distroy = []
+        #730
+        input_x = 550
+        label_width = Label(self.root, bg=self.background_color, fg="#BB86FC",text="Width")
+        label_width.place(x=input_x, y=190)
+        spin_box_width = Spinbox(self.root,from_=1, to=3000,textvariable=StringVar(value=0),wrap=True, fg="#6200EE", width=5)
+        spin_box_width.place(x=input_x, y=210)
+        label_height = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Height")
+        label_height.place(x=input_x, y=240)
+        spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE", width=5)
+        spin_box_height.place(x=input_x, y=260)
+        label_depth = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Depth")
+        label_depth.place(x=input_x, y=290)
+        spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
                                 width=5)
-      spin_box_depth.place(x=input_x, y=310)
-      self.root.mainloop()
+        spin_box_depth.place(x=input_x, y=310)
+        list_distroy.append(label_width)
+        list_distroy.append(spin_box_width)
+        list_distroy.append(label_height)
+        list_distroy.append(spin_box_height)
+        list_distroy.append(label_depth)
+        list_distroy.append(spin_box_depth)
+        mylabel2 = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC",
+                         bg=self.background_color, font=("Arial", 25))
+        mylabel2.pack()
+        mylabel2.place(x=170, y=80)
+        button1 = Button(self.root, text='Minimax without α-β pruning',
+                         command=lambda: [self.move_to_board(list_distroy,
+                                                             int(spin_box_width.get()), int(spin_box_depth.get()),
+                                                             int(spin_box_height.get()))],
+                         bg=self.background_color, fg="#6200EE", height=2, width=20)
+        button1.place(x=170, y=130)
+        button2 = Button(self.root, text='Minimax with α-β pruning',
+                         command=lambda: [self.move_to_board(list_distroy,int(spin_box_width.get()), int(spin_box_depth.get()),
+                                                             int(spin_box_height.get()))],
+                         bg=self.background_color, fg="#6200EE", height=2, width=20)
+        button2.place(x=170, y=310)
+        list_distroy.append(mylabel2)
+        list_distroy.append(button1)
+        list_distroy.append(button2)
+        self.root.mainloop()
