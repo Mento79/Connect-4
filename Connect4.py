@@ -1,5 +1,6 @@
 from tkinter import *
 from heusrtic import *
+from alpha_beta import *
 
 class game:
 
@@ -83,7 +84,8 @@ class game:
         else:
             self.color = not self.color
             if (not self.color):
-                temp ,column2 = mini_max(self.board, 2, True)
+                # temp ,column2 = mini_max(self.board, 2, True)
+                temp ,column2 = mini_max(self.board, 2,-math.inf,math.inf, True)
                 self.draw(column2)
 
 

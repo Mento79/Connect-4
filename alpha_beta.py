@@ -43,8 +43,7 @@ def mini_max(Board, depth, alpha, beta,maximizing_player):
                 value = new_value
                 Column = col2
             if(value>=beta):
-                return value,Column
-            alpha=max(alpha,value)
+                break
         return value, Column
     else:
         value = math.inf
@@ -56,6 +55,6 @@ def mini_max(Board, depth, alpha, beta,maximizing_player):
                 value = new_value
                 Column = col2
             if(value<=alpha):
-                return value,Column
+                break
             beta=max(beta,value)
         return value, Column
