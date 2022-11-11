@@ -177,6 +177,12 @@ class game:
                                          starx + (40 * self.scale),
                                          stary + (49.5 * self.scale), fill="", outline=self.yellow_border, width="2")
 
+    def draw_line(self,i1,j1,i2,j2,color):
+        x1 = i1 * (2 + self.square_length) + (self.square_length)/2
+        x2 = i2 * (2 + self.square_length) + (self.square_length)/2
+        y1 = j1 * (2 + self.square_length) + (self.square_length)/2
+        y2 = j2 * (2 + self.square_length) + (self.square_length)/2
+        self.mycanvas.create_line(x1 ,y1 ,x2 ,y2 ,fill=color ,width=10)
     def check(self):
         red = 0
         yellow = 0
@@ -186,36 +192,45 @@ class game:
                 if (self.board[i][j] == 1 and self.board[i + 1][j] == 1 and self.board[i + 2][j] == 1 and
                         self.board[i + 3][j] == 1):
                     red += 1
+                    self.draw_line(j,i+1,j,i+4,"white")
                 if (self.board[i][j] == 2 and self.board[i + 1][j] == 2 and self.board[i + 2][j] == 2 and
                         self.board[i + 3][j] == 2):
                     yellow += 1
+                    self.draw_line(j,i+1,j,i+4,"black")
         # right and left
         for i in range(self.board_height):
             for j in range(self.board_width - 3):
                 if (self.board[i][j] == 1 and self.board[i][j + 1] == 1 and self.board[i][j + 2] == 1 and self.board[i][
                     j + 3] == 1):
                     red += 1
+                    self.draw_line(j,i+1,j+3,i+1,"white")
+
                 if (self.board[i][j] == 2 and self.board[i][j + 1] == 2 and self.board[i][j + 2] == 2 and self.board[i][
                     j + 3] == 2):
                     yellow += 1
+                    self.draw_line(j,i+1,j+3,i+1,"black")
         # digonally
         for i in range(self.board_width - 3):
             for j in range(self.board_height - 3):
                 if (self.board[j][i] == 1 and self.board[j + 1][i + 1] == 1 and self.board[j + 2][i + 2] == 1 and
                         self.board[j + 3][i + 3] == 1):
                     red += 1
+                    self.draw_line(i,j+1,i+3,j+4,"white")
                 if (self.board[j][i] == 2 and self.board[j + 1][i + 1] == 2 and self.board[j + 2][i + 2] == 2 and
                         self.board[j + 3][i + 3] == 2):
                     yellow += 1
+                    self.draw_line(i,j+1,i+3,j+4,"black")
         # reverse diagonal
         for i in range(self.board_width - 3):
             for j in range(self.board_height - 1, self.board_height - 4, -1):
                 if (self.board[j][i] == 1 and self.board[j - 1][i + 1] == 1 and self.board[j - 2][i + 2] == 1 and
                         self.board[j - 3][i + 3] == 1):
                     red += 1
+                    self.draw_line(i+3,j-2,i,j+1,"white")
                 if (self.board[j][i] == 2 and self.board[j - 1][i + 1] == 2 and self.board[j - 2][i + 2] == 2 and
                         self.board[j - 3][i + 3] == 2):
                     yellow += 1
+                    self.draw_line(i+3,j-2,i,j+1,"black")
         print("Red     ", red, " - ", yellow, "    yellow")
         top = Toplevel(self.root)
         top.configure(background=self.background_color)
