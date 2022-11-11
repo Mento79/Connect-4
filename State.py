@@ -110,8 +110,8 @@ class State:
             start = i * self.NoBitsOfNoC
             to.append(self.bitsToInt(self.A[start: start+self.NoBitsOfNoC]))
 
-        enmy = [4,2,1]
-        ai = [4,2,1]
+        enmy = [8,4,1]
+        ai = [8,4,1]
 
 
         h = 0
@@ -145,14 +145,14 @@ class State:
                     h+=ai[0]
 
                 #if 3
-                if ((to[j]<=i or to[j]>i and self.get(i,j)==0) and (to[j+1]<=i or to[j+1]>i and self.get(i,j+1)==0) and (to[j+2]<=i or to[j+2]>i and self.get(i,j+2)==0) and (to[j+3]<=i or to[j+3]>i and self.get(i,j+3)==0)):
+                if ((to[j]<=i or (to[j]>i and self.get(i,j)==0)) and (to[j+1]<=i or (to[j+1]>i and self.get(i,j+1)==0)) and (to[j+2]<=i or (to[j+2]>i and self.get(i,j+2)==0)) and (to[j+3]<=i or (to[j+3]>i and self.get(i,j+3)==0))):
                     sum1 = 0
                     for k in range(4):
                         if to[j+k]>i and self.get(i,j+k)==0:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h-=enmy[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h-=enmy[2]
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i or to[j+1]>i and self.get(i,j+1)==1) and (to[j+2]<=i or to[j+2]>i and self.get(i,j+2)==1) and (to[j+3]<=i or to[j+3]>i and self.get(i,j+3)==1)):
@@ -160,9 +160,9 @@ class State:
                     for k in range(4):
                         if to[j+k]>i and self.get(i,j+k)==1:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h+=ai[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h+=ai[2]
 
         #digonally
@@ -179,9 +179,9 @@ class State:
                     for k in range(4):
                         if to[j+k]>i+k and self.get(i+k,j+k)==0:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h-=enmy[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h-=enmy[2]
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i+1 or to[j+1]>i+1 and self.get(i+1,j+1)==1) and (to[j+2]<=i+2 or to[j+2]>i+2 and self.get(i+2,j+2)==1) and (to[j+3]<=i+3 or to[j+3]>i+3 and self.get(i+3,j+3)==1)):
@@ -189,9 +189,9 @@ class State:
                     for k in range(4):
                         if to[j+k]>i+k and self.get(i+k,j+k)==1:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h+=ai[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h+=ai[2]
 
 
@@ -209,9 +209,9 @@ class State:
                     for k in range(4):
                         if to[j+k]>i-k and self.get(i-k,j+k)==0:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h-=enmy[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h-=enmy[2]
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i-1 or to[j+1]>i-1 and self.get(i-1,j+1)==1) and (to[j+2]<=i-2 or to[j+2]>i-2 and self.get(i-2,j+2)==1) and (to[j+3]<=i-3 or to[j+3]>i-3 and self.get(i-3,j+3)==1)):
@@ -219,9 +219,9 @@ class State:
                     for k in range(4):
                         if to[j+k]>i-k and self.get(i-k,j+k)==1:
                             sum1+=1
-                    if sum ==3:
+                    if sum1 ==3:
                         h+=ai[1]
-                    elif sum ==2:
+                    elif sum1 ==2:
                         h+=ai[2]
 
 
