@@ -79,7 +79,7 @@ class game:
             self.tree_button = Button(self.root, text='Tree',
                              command=lambda: [self.draw_tree(mo)],
                              bg=self.background_color, fg="#6200EE", height=2, width=10)
-            self.tree_button.place(x=800, y=10)
+            self.tree_button.place(x=10, y=60)
         x = i * (2 + self.square_length)
         starx = i * (2 + self.square_length) + (self.star_x_shift)
         y = ((self.board_height - 1) - self.col[i]) * (2 + self.square_length) + self.square_length
@@ -339,23 +339,23 @@ class game:
             text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
                                            font='Calibri 10', anchor="w", fill="white")
         elif max_par:
-            pts = [750, 60, 700, 100, 800, 100]
+            pts = [750, 60, 700, 104, 800, 105]
             poly = tree_canvas.create_polygon(pts, fill="#6200EE")
             text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
-                                           font='Calibri 10', anchor="w", fill="white")
+                                           font='Calibri 9', anchor="w", fill="white")
             arrow_st_pt = (750, 100)
         else:
-            pts = [700, 60, 800, 60, 750, 100]
+            pts = [700, 60, 800, 60, 750, 105]
             poly = tree_canvas.create_polygon(pts, fill="#CF6679")
             text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
-                                           font='Calibri 10', anchor="w", fill="white")
-            arrow_st_pt = (750, 100)
+                                           font='Calibri 9', anchor="w", fill="white")
+            arrow_st_pt = (750, 105)
         n = len(state.children)
         y_child_st = 600
         max_size_side = 80
         space = (1500 - max_size_side * n - 10) // (n - 1)
         poly: list = [x for x in range(n)]
-        tup : List[Tuple[int, int]] = []
+        tup: List[Tuple[int, int]] = []
         for i in range(n):
             if max_par:
                 pts = [5 + space * i + max_size_side * i, y_child_st,
@@ -370,11 +370,11 @@ class game:
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#CF6679")
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
-                                               5 + space * i + max_size_side * i + max_size_side / 2, y_child_st)
+                                               5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
                 text = tree_canvas.create_text(10 + space * i + max_size_side * i + (max_size_side / 2 - 10),
                                                y_child_st + 15,
                                                text=str(state.children[i].hvalue),
-                                               font='Calibri 10', anchor="w", fill="white")
+                                               font='Calibri 9', anchor="w", fill="white")
                 tree_canvas.tag_bind(poly[i], '<Button-1>',
                                      lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas, top))
             else:
@@ -390,11 +390,11 @@ class game:
                 tup.append((5 + space * i + max_size_side * i,
                             5 + space * i + max_size_side * (i + 1)))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
-                                              5 + space * i + max_size_side * i + max_size_side / 2, y_child_st)
+                                              5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
                 text = tree_canvas.create_text(5 + space * i + max_size_side * i + (max_size_side / 2 - 10),
                                                y_child_st + 20,
                                                text=str(state.children[i].hvalue),
-                                               font='Calibri 10', anchor="w", fill="white")
+                                               font='Calibri 9', anchor="w", fill="white")
                 tree_canvas.tag_bind(poly[i], '<Button-1>', lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,top))
 
     def changeOnHover(self, button):
@@ -412,6 +412,7 @@ class game:
         # self.draw_tree(mo)
         self.root.minsize(height=600, width=900)
         list_destroy = []
+        self.tree_button = None
         """
         input_x = 550
         label_width = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Width")
