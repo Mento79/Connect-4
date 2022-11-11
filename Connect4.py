@@ -3,6 +3,7 @@ from tkinter import messagebox
 from typing import List, Tuple
 
 from heusrtic import *
+from State import State
 from alpha_beta import *
 
 
@@ -75,9 +76,10 @@ class game:
 
     def draw(self, i):
         mo = StateMocker(0)
+        state:State = None
         if self.tree_button is None:
             self.tree_button = Button(self.root, text='Tree',
-                             command=lambda: [self.draw_tree(mo)],
+                             command=lambda: [self.draw_tree(state)],
                              bg=self.background_color, fg="#6200EE", height=2, width=10)
             self.tree_button.place(x=10, y=60)
         x = i * (2 + self.square_length)
@@ -129,7 +131,7 @@ class game:
         else:
             self.color = not self.color
             if (not self.color):
-                temp ,colun2 = start_minmax(self.board, self.Mini_Max_Depth, True)
+                temp ,colun2, state = start_minmax(self.board, self.Mini_Max_Depth, True)
                 print(temp)
                 print(colun2)
                 # temp ,column2 = start2_minmax(self.board, 2,-math.inf,math.inf, True)
@@ -329,7 +331,7 @@ class game:
             if tup[0] <= x <= tup[1]:
                 return i
 
-    def draw_tree(self, state: StateMocker, tree_canvas=None, top=None):
+    def draw_tree(self, state: State,depth= 0 , tree_canvas=None, top=None):
         # print(jj)
         if tree_canvas is None:
             top = Toplevel(self.root)
@@ -341,10 +343,10 @@ class game:
         tree_canvas.place(x=0, y=0)
         if state.parent is not None:
             back_button = Button(top, text='Back',
-                                 command=lambda: [self.draw_tree(state.parent, tree_canvas, top)],
+                                 command=lambda: [self.draw_tree(state.parent,depth-1 ,tree_canvas, top)],
                                  bg=self.background_color, fg="#6200EE", height=2, width=10)
             back_button.place(x=10, y=10)
-        max_par = state.depth % 2 == 0
+        max_par = depth % 2 == 0
         arrow_st_pt = (0, 0)
         poly = None
         text = None
@@ -385,7 +387,7 @@ class game:
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#CF6679")
                     tree_canvas.tag_bind(poly[i], '<Button-1>',
-                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,
+                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)],depth+1 ,tree_canvas,
                                                                   top))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
                                                5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
@@ -404,7 +406,7 @@ class game:
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#6200EE")
                     tree_canvas.tag_bind(poly[i], '<Button-1>',
-                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,
+                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)],depth+1 ,tree_canvas,
                                                                   top))
                 tup.append((5 + space * i + max_size_side * i,
                             5 + space * i + max_size_side * (i + 1)))

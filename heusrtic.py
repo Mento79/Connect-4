@@ -30,8 +30,8 @@ def get_valid_locations(Board:State):
 def start_minmax(Board,depth,maximing_player):
     state = State.State(Board)
     print("deeeppptthhhh", depth)
-    return mini_max(state,depth,maximing_player);
-
+    value, Column = mini_max(state,depth,maximing_player)
+    return value, Column, state
 
 def mini_max(Board:State, depth, maximizing_player):
     valid_location = get_valid_locations(Board)
@@ -47,6 +47,7 @@ def mini_max(Board:State, depth, maximizing_player):
             if (new_score > value):
                 value = new_score
                 Column = col2
+        Board.hvalue = value
         return value, Column
     else:
         value = math.inf
@@ -58,4 +59,5 @@ def mini_max(Board:State, depth, maximizing_player):
             if (new_score < value):
                 value = new_score
                 Column = col2
+        Board.hvalue = value
         return value, Column
