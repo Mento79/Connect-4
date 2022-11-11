@@ -234,21 +234,23 @@ class game:
         print("Red     ", red, " - ", yellow, "    yellow")
         top = Toplevel(self.root)
         top.configure(background=self.background_color)
-        top.geometry("500x250")
+        top.geometry("600x250")
         top.title("Result")
         if yellow > red:
-            Label(top, text="Yellow win!", fg="yellow",
-                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
+            Label(top, text="Red     "+ str(red)+ " - "+ str(yellow)+ "    yellow", fg="yellow",
+                  bg=self.background_color, font='Arial 20 bold').place(x=165, y=30)
             Label(top, text="You are beaten by machine XD", fg=self.menu_color,
-                  bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
+                  bg=self.background_color, font='Arial 27 bold').place(x=35, y=100)
         elif red > yellow:
-            Label(top, text="Red win!", fg="red",
-                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
-            Label(top, text="ya 7lewetak ya 7lewetak", fg=self.menu_color,
-                  bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
+            Label(top, text="Red     "+ str(red)+ " - "+ str(yellow)+ "    yellow", fg="red",
+                  bg=self.background_color, font='Arial 20 bold').place(x=165, y=30)
+            Label(top, text="ya 7lawatak ya 7lawatak", fg=self.menu_color,
+                  bg=self.background_color, font='Arial 27 bold').place(x=40, y=100)
         else:
-            Label(top, text="Draw!", fg=self.menu_color,
-                  bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
+            Label(top, text="Red     "+ str(red)+ " - "+ str(yellow)+ "    yellow", fg=self.menu_color,
+                  bg=self.background_color, font='Arial 20 bold').place(x=165, y=30)
+            Label(top, text="Are You Our AI ?! :O", fg=self.menu_color,
+                  bg=self.background_color, font='Arial 27 bold').place(x=35, y=100)
 
     def back_to_menu(self, back_button: Button):
         self.mycanvas.destroy()
@@ -428,31 +430,6 @@ class game:
         self.root.minsize(height=600, width=900)
         list_destroy = []
         self.tree_button = None
-        """
-        input_x = 550
-        label_width = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Width")
-        label_width.place(x=input_x, y=190)
-        spin_box_width = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
-                                 width=5)
-        spin_box_width.place(x=input_x, y=210)
-        label_height = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Height")
-        label_height.place(x=input_x, y=240)
-        spin_box_height = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
-                                  width=5)
-        spin_box_height.place(x=input_x, y=260)
-        label_depth = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Depth")
-        label_depth.place(x=input_x, y=290)
-        spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
-                                 width=5)
-        spin_box_depth.place(x=input_x, y=310)
-        
-        list_destroy.append(label_width)
-        list_destroy.append(spin_box_width)
-        list_destroy.append(label_height)
-        list_destroy.append(spin_box_height)
-        list_destroy.append(label_depth)
-        list_destroy.append(spin_box_depth)
-                """
 
         my_label = Label(self.root, text='Choose one of the following two methods', fg=self.menu_color,
                          bg=self.background_color, font=("Helvetica", 25))
@@ -469,7 +446,6 @@ class game:
                                           textvariable=self.board_height_text)
         height_Entry.place(x=300,y=180,height=65,width=65)
 
-#######################
         width_label = Label(self.root, text='W = ',fg=self.menu_color,
                              bg=self.background_color,font=('Helvetica 40 bold'))
         width_label.pack()
@@ -480,7 +456,6 @@ class game:
                                           textvariable=self.board_width_text)
         width_Entry.place(x=600,y=180,height=65,width=65)
 
-#######################
         depth_label = Label(self.root, text='K = ',fg=self.menu_color,
                              bg=self.background_color,font=('Helvetica 40 bold'))
         depth_label.pack()
@@ -496,7 +471,7 @@ class game:
         list_destroy.append(width_label)
         list_destroy.append(depth_Entry)
         list_destroy.append(depth_label)
-        
+
         button1 = Button(self.root, text='Minimax without α-β pruning',
                          command=lambda: [self.move_to_board(list_destroy)],
                          bg=self.background_color, fg="#6200EE", height=2, width=25)
