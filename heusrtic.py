@@ -25,18 +25,18 @@ def get_valid_locations(Board:State):
 # def drop_piece(board, row, col, piece):
 #     board[row][col] = piece
 
-def heuristic():
-    return random.random()
+
 
 def start_minmax(Board,depth,maximing_player):
     state = State.State(Board)
+    print("deeeppptthhhh", depth)
     return mini_max(state,depth,maximing_player);
 
 
 def mini_max(Board:State, depth, maximizing_player):
     valid_location = get_valid_locations(Board)
     if depth == 0 or len(valid_location) == 0:
-        return heuristic(), 0
+        return Board.heuristic(), 0
     if maximizing_player:
         value = -math.inf
         for col2 in valid_location:
