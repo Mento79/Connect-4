@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from typing import List, Tuple
 
 from heusrtic import *
@@ -29,39 +30,33 @@ class game:
         self.yellow_tile = "#c1bc2f"
         self.background_color = "black"
         self.board_color = "#00008b"
-
-        # Maximum board size to still be playable 17 x 17
-        # Dynamic Variables
-        self.board_width = 7
-        self.board_height = 6
-        self.Mini_Max_Depth = 5
+        self.menu_color= "#6200EE"
 
         # scale factor depends on board size
         self.scale_factor = 3
-        if (self.board_height <= 8):
-            self.scale_factor = 0
-        elif (self.board_height <= 11):
-            self.scale_factor = 1
-        elif (self.board_height <= 17):
-            self.scale_factor = 2
 
         # board measurments
-        self.square_length = 100 - (25 * self.scale_factor)
-        self.scale = 1.2 - (0.4 * self.scale_factor)
-        self.circle_scale = 12 - (2 * self.scale_factor)
-        self.star_x_shift = 20 - (2 * self.scale_factor)
-        self.star_y_shift = 17 - (2 * self.scale_factor)
-        self.square_stroke = 4
+
+        self.board_width = None
+        self.board_height = None
+        self.Mini_Max_Depth = None
+
+        self.square_length = None
+        self.scale = None
+        self.circle_scale = None
+        self.star_x_shift = None
+        self.star_y_shift = None
+        self.square_stroke =None
 
         # canvas dimensions
-        self.canvas_width = self.board_width * self.square_length + self.board_width
-        self.canvas_height = (self.board_height + 1) * self.square_length + (4 * self.board_height)
+        self.canvas_width = None
+        self.canvas_height = None
 
         # game assistant variables
-        self.board = []
-        self.arr_circles = [[] * self.board_width]
-        self.col = [0] * self.board_width
-        self.color = True
+        self.board = None
+        self.arr_circles = None
+        self.col = None
+        self.color = None
 
         # Creating tkinter root
         self.root = Tk()
@@ -71,12 +66,19 @@ class game:
         self.root.configure(background=self.background_color)
         self.mycanvas: Canvas = None
 
+        # Dynamic Variables
+        self.board_width_text = StringVar()
+        self.board_height_text = StringVar()
+        self.Mini_Max_Depth_text = StringVar()
+        self.tree_button = None
+
+
     def draw(self, i):
         mo = StateMocker(0)
-        tree_button = Button(self.root, text='Tree',
+        self.tree_button = Button(self.root, text='Tree',
                          command=lambda: [self.draw_tree(mo)],
                          bg=self.background_color, fg="#6200EE", height=2, width=10)
-        tree_button.place(x=800, y=10)
+        self.tree_button.place(x=800, y=10)
         x = i * (2 + self.square_length)
         starx = i * (2 + self.square_length) + (self.star_x_shift)
         y = ((self.board_height - 1) - self.col[i]) * (2 + self.square_length) + self.square_length
@@ -221,23 +223,50 @@ class game:
         if yellow > red:
             Label(top, text="Yellow win!", fg="yellow",
                   bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
-            Label(top, text="You are beaten by machine XD", fg="#BB86FC",
+            Label(top, text="You are beaten by machine XD", fg=self.menu_color,
                   bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
         elif red > yellow:
             Label(top, text="Red win!", fg="red",
                   bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
-            Label(top, text="ya 7lewetak ya 7lewetak", fg="#BB86FC",
+            Label(top, text="ya 7lewetak ya 7lewetak", fg=self.menu_color,
                   bg=self.background_color, font='Arial 27 bold').place(x=10, y=100)
         else:
-            Label(top, text="Draw!", fg="#BB86FC",
+            Label(top, text="Draw!", fg=self.menu_color,
                   bg=self.background_color, font='Arial 18 bold').place(x=10, y=15)
 
     def back_to_menu(self, back_button: Button):
         self.mycanvas.destroy()
         back_button.destroy()
+        if self.tree_button is not None:
+            self.tree_button.destroy()
         self.draw_main_menu()
 
     def draw_board(self):
+        self.board_width=int(self.board_width_text.get())
+        self.board_height=int(self.board_height_text.get())
+        self.Mini_Max_Depth=int(self.Mini_Max_Depth_text.get())
+        print(self.board_height,self.board_width,self.Mini_Max_Depth)
+        if (self.board_height <= 8):
+            self.scale_factor = 0
+        elif (self.board_height <= 11):
+            self.scale_factor = 1
+        elif (self.board_height <= 17):
+            self.scale_factor = 2
+
+        self.square_length = 100 - (25 * self.scale_factor)
+        self.scale = 1.2 - (0.4 * self.scale_factor)
+        self.circle_scale = 12 - (2 * self.scale_factor)
+        self.star_x_shift = 20 - (2 * self.scale_factor)
+        self.star_y_shift = 17 - (2 * self.scale_factor)
+        self.square_stroke =4
+
+        self.canvas_width = self.board_width * self.square_length + self.board_width
+        self.canvas_height = (self.board_height + 1) * self.square_length + (4 * self.board_height)
+
+        self.board = []
+        self.arr_circles = [[] * self.board_width]
+        self.col = [0] * self.board_width
+        self.color = True
         self.root.minsize(height=self.canvas_height + 300, width=self.canvas_width + 300)
         self.mycanvas = Canvas(self.root, width=self.canvas_width + (self.square_stroke * 3),
                                height=self.canvas_height + (self.square_stroke * 3), bd=0, highlightthickness=0,
@@ -264,14 +293,19 @@ class game:
                 self.mycanvas.tag_bind(self.arr_circles[i][j], "<Enter>",
                                        lambda x: self.hover_draw(x.x // (self.square_length + 2)))
 
-    def move_to_board(self, list_destroy: List, width: int, depth: int, height: int) -> None:
-        self.board_height = height
-        self.board_width = width
-        self.Mini_Max_Depth = depth
-        # print(f"\t\t\t{height} {width} {depth}")
-        for obj in list_destroy:
-            obj.destroy()
-        self.draw_board()
+    def move_to_board(self, list_destroy) -> None:
+        if self.board_height_text.get()== "" or self.board_width_text.get()== "" or self.Mini_Max_Depth_text.get()== "" :
+            messagebox.showwarning("Error", "Please Enter the Height ,Width and Depth")
+        elif int(self.board_height_text.get())<6 or  int(self.board_height_text.get())>17:
+            messagebox.showwarning("Error", "Please Enter Height between 6 and 17")
+        elif int(self.board_width_text.get())<7 or  int(self.board_width_text.get())>17:
+            messagebox.showwarning("Error", "Please Enter Width between 7 and 17")
+        # elif int(self.Mini_Max_Depth_text.get())<##Min_Depth or  int(self.Mini_Max_Depth_text.get())>##Max_Depth:
+        #     messagebox.showwarning("Error", "Please Enter Height between 6 and 17")
+        else:
+            for obj in list_destroy:
+                obj.destroy()
+            self.draw_board()
 
     def get_idx(self, x: int, tp: List[Tuple[int, int]]):
         for i, tup in enumerate(tp):
@@ -365,8 +399,9 @@ class game:
     def draw_main_menu(self):
         # mo = StateMocker(0)
         # self.draw_tree(mo)
-        self.root.minsize(height=450, width=800)
+        self.root.minsize(height=600, width=900)
         list_destroy = []
+        """
         input_x = 550
         label_width = Label(self.root, bg=self.background_color, fg="#BB86FC", text="Width")
         label_width.place(x=input_x, y=190)
@@ -383,28 +418,68 @@ class game:
         spin_box_depth = Spinbox(self.root, from_=1, to=3000, textvariable=StringVar(value=0), wrap=True, fg="#6200EE",
                                  width=5)
         spin_box_depth.place(x=input_x, y=310)
+        
         list_destroy.append(label_width)
         list_destroy.append(spin_box_width)
         list_destroy.append(label_height)
         list_destroy.append(spin_box_height)
         list_destroy.append(label_depth)
         list_destroy.append(spin_box_depth)
-        my_label = Label(self.root, text='Choose one of the following two methods', fg="#BB86FC",
-                         bg=self.background_color, font=("Arial", 25))
+                """
+
+        my_label = Label(self.root, text='Choose one of the following two methods', fg=self.menu_color,
+                         bg=self.background_color, font=("Helvetica", 25))
         my_label.pack()
-        my_label.place(x=170, y=80)
+        my_label.place(x=150, y=80)
+
+        height_label = Label(self.root, text='H = ',fg=self.menu_color,
+                             bg=self.background_color,font=('Helvetica 40 bold'))
+        height_label.pack()
+        height_label.place(x=200, y=180)
+        print(self.board_height)
+        height_Entry=Entry(self.root, width=3, font=('Helvetica 40 bold'), justify='center',
+                                          fg=self.menu_color, bg="white", borderwidth=0,
+                                          textvariable=self.board_height_text)
+        height_Entry.place(x=300,y=180,height=65,width=65)
+
+#######################
+        width_label = Label(self.root, text='W = ',fg=self.menu_color,
+                             bg=self.background_color,font=('Helvetica 40 bold'))
+        width_label.pack()
+        width_label.place(x=490, y=180)
+
+        width_Entry=Entry(self.root, width=3, font=('Helvetica 40 bold'), justify='center',
+                                          fg=self.menu_color, bg="white", borderwidth=0,
+                                          textvariable=self.board_width_text)
+        width_Entry.place(x=600,y=180,height=65,width=65)
+
+#######################
+        depth_label = Label(self.root, text='K = ',fg=self.menu_color,
+                             bg=self.background_color,font=('Helvetica 40 bold'))
+        depth_label.pack()
+        depth_label.place(x=350, y=300)
+
+        depth_Entry=Entry(self.root, width=3, font=('Helvetica 40 bold'), justify='center',
+                                          fg=self.menu_color, bg="white", borderwidth=0,
+                                          textvariable=self.Mini_Max_Depth_text)
+        depth_Entry.place(x=450,y=300,height=65,width=65)
+        """
+                list_destroy.append(height_Entry)
+                list_destroy.append(height_label)
+                list_destroy.append(width_Entry)
+                list_destroy.append(width_label)
+                list_destroy.append(depth_Entry)
+                list_destroy.append(depth_label)
+        
+        """
         button1 = Button(self.root, text='Minimax without α-β pruning',
-                         command=lambda: [self.move_to_board(list_destroy,
-                                                             int(spin_box_width.get()), int(spin_box_depth.get()),
-                                                             int(spin_box_height.get()))],
-                         bg=self.background_color, fg="#6200EE", height=2, width=20)
-        button1.place(x=170, y=130)
+                         command=lambda: [self.move_to_board(list_destroy)],
+                         bg=self.background_color, fg="#6200EE", height=2, width=25)
+        button1.place(x=150, y=410)
         button2 = Button(self.root, text='Minimax with α-β pruning',
-                         command=lambda: [self.move_to_board(list_destroy,
-                                                             int(spin_box_width.get()), int(spin_box_depth.get()),
-                                                             int(spin_box_height.get()))],
-                         bg=self.background_color, fg="#6200EE", height=2, width=20)
-        button2.place(x=170, y=310)
+                         command=lambda: [self.move_to_board(list_destroy)],
+                         bg=self.background_color, fg="#6200EE", height=2, width=25)
+        button2.place(x=500, y=410)
         list_destroy.append(my_label)
         list_destroy.append(button1)
         list_destroy.append(button2)
