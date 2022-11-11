@@ -72,6 +72,7 @@ class game:
         self.board_width_text = StringVar(self.root,"7")
         self.Mini_Max_Depth_text = StringVar(self.root,"2")
         self.tree_button = None
+        self.without_prun = True
 
 
     def draw(self, i):
@@ -131,10 +132,12 @@ class game:
         else:
             self.color = not self.color
             if (not self.color):
-                temp ,colun2, state = start_minmax(self.board, self.Mini_Max_Depth, True)
-                print(temp)
-                print(colun2)
-                # temp ,column2 = start2_minmax(self.board, 2,-math.inf,math.inf, True)
+                if(self.without_prun):
+                    temp, colun2, state = start_minmax(self.board, self.Mini_Max_Depth, True)
+                    print(temp)
+                    print(colun2)
+                else:
+                    temp, column2, state = start2_minmax(self.board, 2,-math.inf,math.inf, True)
                 self.draw(colun2)
 
     def hover_clear(self):
@@ -314,7 +317,8 @@ class game:
                 self.mycanvas.tag_bind(self.arr_circles[i][j], "<Enter>",
                                        lambda x: self.hover_draw(x.x // (self.square_length + 2)))
 
-    def move_to_board(self, list_destroy) -> None:
+    def move_to_board(self, list_destroy, without_prun) -> None:
+        self.without_prun - without_prun
         if self.board_height_text.get()== "" or self.board_width_text.get()== "" or self.Mini_Max_Depth_text.get()== "" :
             messagebox.showwarning("Error", "Please Enter the Height ,Width and Depth")
         elif int(self.board_height_text.get())<6 or  int(self.board_height_text.get())>17:
@@ -479,11 +483,11 @@ class game:
         list_destroy.append(depth_label)
 
         button1 = Button(self.root, text='Minimax without α-β pruning',
-                         command=lambda: [self.move_to_board(list_destroy)],
+                         command=lambda: [self.move_to_board(list_destroy, True)],
                          bg=self.background_color, fg="#6200EE", height=2, width=25)
         button1.place(x=150, y=410)
         button2 = Button(self.root, text='Minimax with α-β pruning',
-                         command=lambda: [self.move_to_board(list_destroy)],
+                         command=lambda: [self.move_to_board(list_destroy, False)],
                          bg=self.background_color, fg="#6200EE", height=2, width=25)
         button2.place(x=500, y=410)
         self.changeOnHover(button1)
