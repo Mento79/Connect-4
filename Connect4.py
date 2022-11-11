@@ -89,7 +89,7 @@ class game:
         else:
             self.color = not self.color
             if (not self.color):
-                 temp ,colun2 = start_minmax(self.board, 2, True)
+                 temp ,colun2 = start_minmax(self.board, self.Mini_Max_Depth, True)
                  print(temp)
                  print(colun2)
                 # temp ,column2 = start2_minmax(self.board, 2,-math.inf,math.inf, True)

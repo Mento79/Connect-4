@@ -110,33 +110,35 @@ class State:
             start = i * self.NoBitsOfNoC
             to.append(self.bitsToInt(self.A[start: start+self.NoBitsOfNoC]))
 
+
+
         h = 0
         #down
         for j in range(self.NoColomns):
             for i in range(self.NoRows-3):
                 # complete
                 if(i<to[j]-3 and self.get(i,j)==0 and self.get(i+1,j)==0 and self.get(i+2,j)==0  and self.get(i+3,j)==0 ):
-                    h-=4
+                    h-=5
                 if(i<to[j]-3 and self.get(i, j) == 1 and self.get(i + 1, j) == 1 and self.get(i + 2, j) == 1 and self.get(i + 3,j) == 1):
                     h += 4
 
                 # if 3
                 if(i==to[j]-3 and self.get(i,j)==0 and self.get(i+1,j)==0 and self.get(i+2,j)==0  and self.get(i+3,j)==0 ):
-                    h-=2
+                    h-=3
                 if(i==to[j]-3 and self.get(i, j) == 1 and self.get(i + 1, j) == 1 and self.get(i + 2, j) == 1 and self.get(i + 3,j) == 0):
-                    h += 2
+                    h += 3
 
                 # if 2
                 if(i==to[j]-2 and self.get(i,j)==0 and self.get(i+1,j)==0):
-                    h-=1
+                    h-=2
                 if(i==to[j]-2 and self.get(i, j) == 1 and self.get(i + 1, j) == 1):
-                    h += 1
+                    h += 2
 
         #right and left
         for j in range(self.NoColomns-3):
             for i in range(self.NoRows):
                 if (to[j]>i and self.get(i,j)==0 and to[j+1]>i and self.get(i,j+1)==0 and to[j+2]>i and self.get(i,j+2)==0 and to[j+3]>i and self.get(i,j+3)==0):
-                    h-=4
+                    h-=5
                 if (to[j]>i and self.get(i,j)==1 and to[j+1]>i and self.get(i,j+1)==1 and to[j+2]>i and self.get(i,j+2)==1 and to[j+3]>i and self.get(i,j+3)==1):
                     h+=4
 
@@ -147,9 +149,9 @@ class State:
                         if to[j+k]>i and self.get(i,j+k)==0:
                             sum1+=1
                     if sum ==3:
-                        h-=2
+                        h-=3
                     elif sum ==2:
-                        h-=1
+                        h-=2
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i or to[j+1]>i and self.get(i,j+1)==1) and (to[j+2]<=i or to[j+2]>i and self.get(i,j+2)==1) and (to[j+3]<=i or to[j+3]>i and self.get(i,j+3)==1)):
                     sum1 = 0
@@ -157,15 +159,15 @@ class State:
                         if to[j+k]>i and self.get(i,j+k)==1:
                             sum1+=1
                     if sum ==3:
-                        h+=2
+                        h+=3
                     elif sum ==2:
-                        h+=1
+                        h+=2
 
         #digonally
         for j in range(self.NoColomns-3):
             for i in range( self.NoRows-3):
                 if (to[j]>i and self.get(i,j)==0 and to[j+1]>i+1 and self.get(i+1,j+1)==0 and to[j+2]>i+2 and self.get(i+2,j+2)==0 and to[j+3]>i+3 and self.get(i+3,j+3)==0):
-                    h-=4
+                    h-=5
                 if (to[j]>i and self.get(i,j)==1 and to[j+1]>i+1 and self.get(i+1,j+1)==1 and to[j+2]>i+2 and self.get(i+2,j+2)==1 and to[j+3]>i+3 and self.get(i+3,j+3)==1):
                     h+=4
 
@@ -176,9 +178,9 @@ class State:
                         if to[j+k]>i+k and self.get(i+k,j+k)==0:
                             sum1+=1
                     if sum ==3:
-                        h-=2
+                        h-=3
                     elif sum ==2:
-                        h-=1
+                        h-=2
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i+1 or to[j+1]>i+1 and self.get(i+1,j+1)==1) and (to[j+2]<=i+2 or to[j+2]>i+2 and self.get(i+2,j+2)==1) and (to[j+3]<=i+3 or to[j+3]>i+3 and self.get(i+3,j+3)==1)):
                     sum1 = 0
@@ -186,16 +188,16 @@ class State:
                         if to[j+k]>i+k and self.get(i+k,j+k)==1:
                             sum1+=1
                     if sum ==3:
-                        h+=2
+                        h+=3
                     elif sum ==2:
-                        h+=1
+                        h+=2
 
 
         #reverse diagonal
         for j in range(self.NoColomns-3):
             for i in range(3, self.NoRows, 1):
                 if (to[j]>i and self.get(i,j)==0 and to[j+1]>i-1 and self.get(i-1,j+1)==0 and to[j+2]>i-2 and self.get(i-2,j+2)==0 and to[j+3]>i-3 and self.get(i-3,j+3)==0):
-                    h-=4
+                    h-=5
                 if (to[j]>i and self.get(i,j)==1 and to[j+1]>i-1 and self.get(i-1,j+1)==1 and to[j+2]>i-2 and self.get(i-2,j+2)==1 and to[j+3]>i-3 and self.get(i-3,j+3)==1):
                     h+=4
 
@@ -206,9 +208,9 @@ class State:
                         if to[j+k]>i-k and self.get(i-k,j+k)==0:
                             sum1+=1
                     if sum ==3:
-                        h-=2
+                        h-=3
                     elif sum ==2:
-                        h-=1
+                        h-=2
 
                 if ((to[j]<=i or to[j]>i and self.get(i,j)==1) and (to[j+1]<=i-1 or to[j+1]>i-1 and self.get(i-1,j+1)==1) and (to[j+2]<=i-2 or to[j+2]>i-2 and self.get(i-2,j+2)==1) and (to[j+3]<=i-3 or to[j+3]>i-3 and self.get(i-3,j+3)==1)):
                     sum1 = 0
@@ -216,9 +218,9 @@ class State:
                         if to[j+k]>i-k and self.get(i-k,j+k)==1:
                             sum1+=1
                     if sum ==3:
-                        h+=2
+                        h+=3
                     elif sum ==2:
-                        h+=1
+                        h+=2
 
 
 
