@@ -381,17 +381,18 @@ class game:
                 if len(state.children[i].children) == 0:
                     poly[i] = tree_canvas.create_rectangle(5 + space * i + max_size_side * i, y_child_st,
                                                  5 + space * i + max_size_side * (i + 1),
-                                                 y_child_st + 40, fill="#03DAC6")
+                                                 y_child_st + 40, fill="#189DE4")
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#CF6679")
+                    tree_canvas.tag_bind(poly[i], '<Button-1>',
+                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,
+                                                                  top))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
                                                5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
                 text = tree_canvas.create_text(10 + space * i + max_size_side * i + (max_size_side / 2 - 10),
                                                y_child_st + 15,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
-                tree_canvas.tag_bind(poly[i], '<Button-1>',
-                                     lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas, top))
             else:
                 pts = [5 + space * i + max_size_side * i + max_size_side / 2, y_child_st,
                        5 + space * i + max_size_side * i, y_child_st + 40,
@@ -399,9 +400,12 @@ class game:
                 if len(state.children[i].children) == 0:
                     poly[i] = tree_canvas.create_rectangle(5 + space * i + max_size_side * i, y_child_st,
                                                  5 + space * i + max_size_side * (i + 1),
-                                                 y_child_st + 40, fill="#03DAC6")
+                                                 y_child_st + 40, fill="#189DE4")
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#6200EE")
+                    tree_canvas.tag_bind(poly[i], '<Button-1>',
+                                         lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,
+                                                                  top))
                 tup.append((5 + space * i + max_size_side * i,
                             5 + space * i + max_size_side * (i + 1)))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
@@ -410,7 +414,7 @@ class game:
                                                y_child_st + 20,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
-                tree_canvas.tag_bind(poly[i], '<Button-1>', lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,top))
+
 
     def changeOnHover(self, button):
         # adjusting backgroung of the widget
