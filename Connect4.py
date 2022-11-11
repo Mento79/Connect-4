@@ -67,18 +67,19 @@ class game:
         self.mycanvas: Canvas = None
 
         # Dynamic Variables
-        self.board_width_text = StringVar()
-        self.board_height_text = StringVar()
-        self.Mini_Max_Depth_text = StringVar()
+        self.board_height_text = StringVar(self.root,"6")
+        self.board_width_text = StringVar(self.root,"7")
+        self.Mini_Max_Depth_text = StringVar(self.root,"2")
         self.tree_button = None
 
 
     def draw(self, i):
         mo = StateMocker(0)
-        self.tree_button = Button(self.root, text='Tree',
-                         command=lambda: [self.draw_tree(mo)],
-                         bg=self.background_color, fg="#6200EE", height=2, width=10)
-        self.tree_button.place(x=800, y=10)
+        if self.tree_button is None:
+            self.tree_button = Button(self.root, text='Tree',
+                             command=lambda: [self.draw_tree(mo)],
+                             bg=self.background_color, fg="#6200EE", height=2, width=10)
+            self.tree_button.place(x=800, y=10)
         x = i * (2 + self.square_length)
         starx = i * (2 + self.square_length) + (self.star_x_shift)
         y = ((self.board_height - 1) - self.col[i]) * (2 + self.square_length) + self.square_length
@@ -239,6 +240,7 @@ class game:
         back_button.destroy()
         if self.tree_button is not None:
             self.tree_button.destroy()
+            self.tree_button=None
         self.draw_main_menu()
 
     def draw_board(self):
@@ -395,6 +397,15 @@ class game:
                                                font='Calibri 10', anchor="w", fill="white")
                 tree_canvas.tag_bind(poly[i], '<Button-1>', lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)], tree_canvas,top))
 
+    def changeOnHover(self, button):
+        # adjusting backgroung of the widget
+        # background on entering widget
+        button.bind("<Enter>", func=lambda e: button.config(
+            background="grey"))
+
+        # background color on leving widget
+        button.bind("<Leave>", func=lambda e: button.config(
+            background=self.background_color))
 
     def draw_main_menu(self):
         # mo = StateMocker(0)
@@ -463,15 +474,13 @@ class game:
                                           fg=self.menu_color, bg="white", borderwidth=0,
                                           textvariable=self.Mini_Max_Depth_text)
         depth_Entry.place(x=450,y=300,height=65,width=65)
-        """
-                list_destroy.append(height_Entry)
-                list_destroy.append(height_label)
-                list_destroy.append(width_Entry)
-                list_destroy.append(width_label)
-                list_destroy.append(depth_Entry)
-                list_destroy.append(depth_label)
+        list_destroy.append(height_Entry)
+        list_destroy.append(height_label)
+        list_destroy.append(width_Entry)
+        list_destroy.append(width_label)
+        list_destroy.append(depth_Entry)
+        list_destroy.append(depth_label)
         
-        """
         button1 = Button(self.root, text='Minimax without α-β pruning',
                          command=lambda: [self.move_to_board(list_destroy)],
                          bg=self.background_color, fg="#6200EE", height=2, width=25)
@@ -480,6 +489,8 @@ class game:
                          command=lambda: [self.move_to_board(list_destroy)],
                          bg=self.background_color, fg="#6200EE", height=2, width=25)
         button2.place(x=500, y=410)
+        self.changeOnHover(button1)
+        self.changeOnHover(button2)
         list_destroy.append(my_label)
         list_destroy.append(button1)
         list_destroy.append(button2)
