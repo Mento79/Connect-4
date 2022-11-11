@@ -110,8 +110,8 @@ class State:
             start = i * self.NoBitsOfNoC
             to.append(self.bitsToInt(self.A[start: start+self.NoBitsOfNoC]))
 
-        enmy = [6,4,2]
-        ai = [4,3,2]
+        enmy = [4,2,1]
+        ai = [4,2,1]
 
 
         h = 0
