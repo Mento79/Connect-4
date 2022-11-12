@@ -30,7 +30,8 @@ def heuristic():
 def start2_minmax(Board,depth,alpha,beta,maximing_player):
 
     state = State.State(Board)
-    return mini_max(state,depth,alpha,beta,maximing_player);
+    value, column = mini_max(state,depth,alpha,beta,maximing_player)
+    return value, column,state;
 
 def mini_max(Board, depth, alpha, beta,maximizing_player):
     valid_location = get_valid_locations(Board)
