@@ -1,6 +1,6 @@
 import math
 import copy
-import random
+import time
 import State
 
 # def get_next_open_row(board :State, col):
@@ -12,13 +12,25 @@ import State
 # def is_valid_location(board, col):
 #     return board[0][col] == 0
 
+#
+# def get_valid_locations(Board:State):
+#     valid_locations = []
+#
+#     for col in range(Board.NoColomns):
+#         if Board.check_column(col):
+#             valid_locations.append(col)
+#     return valid_locations
 
 def get_valid_locations(Board:State):
     valid_locations = []
-
-    for col in range(Board.NoColomns):
-        if Board.check_column(col):
-            valid_locations.append(col)
+    if(Board.NoColomns==7):
+        for col in [3,4,2,5,1,6,0]:
+            if Board.check_column(col):
+                valid_locations.append(col)
+    else:
+        for col in range(Board.NoColomns):
+            if Board.check_column(col):
+                valid_locations.append(col)
     return valid_locations
 
 
@@ -29,8 +41,10 @@ def get_valid_locations(Board:State):
 
 def start_minmax(Board,depth,alpha, beta ,maximing_player):
     state = State.State(Board)
-    print("deeeppptthhhh", depth)
+    time_before= round(time.time() * 1000)
     value, Column = mini_max(state,depth,alpha, beta ,maximing_player)
+    time_after= round(time.time() * 1000)
+    print("Time Taken : ",time_after-time_before)
     return value, Column, state
 
 def mini_max(Board:State, depth,alpha, beta, maximizing_player):
