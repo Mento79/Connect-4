@@ -385,21 +385,26 @@ class game:
         max_size_side = 80
         space = 0
         if n ==1:
-            space = 1500/2
+            space = (1500- max_size_side -12)//2
         else:
             space = (1500 - max_size_side * n - 10) // (n - 1)
         poly: list = [x for x in range(n)]
         tup: List[Tuple[int, int]] = []
         for i in range(n):
+            spacei = 1
+            if n!=1 :
+                spacei = i
+
+
             if max_par:
-                pts = [5 + space * i + max_size_side * i, y_child_st,
-                       5 + space * i + max_size_side * (i + 1), y_child_st,
-                       5 + space * i + max_size_side * i + max_size_side / 2, y_child_st + 40]
-                tup.append((5 + space * i + max_size_side * i,
-                       5 + space * i + max_size_side * (i + 1)))
+                pts = [5 + space * spacei + max_size_side * i, y_child_st,
+                       5 + space * spacei + max_size_side * (i + 1), y_child_st,
+                       5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st + 40]
+                tup.append((5 + space * spacei + max_size_side * i,
+                       5 + space * spacei + max_size_side * (i + 1)))
                 if len(state.children[i].children) == 0:
-                    poly[i] = tree_canvas.create_rectangle(5 + space * i + max_size_side * i, y_child_st,
-                                                 5 + space * i + max_size_side * (i + 1),
+                    poly[i] = tree_canvas.create_rectangle(5 + space * spacei + max_size_side * i, y_child_st,
+                                                 5 + space * spacei + max_size_side * (i + 1),
                                                  y_child_st + 40, fill="#189DE4")
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#CF6679")
@@ -407,29 +412,29 @@ class game:
                                          lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)],depth+1 ,tree_canvas,
                                                                   top))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
-                                               5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
-                text = tree_canvas.create_text(10 + space * i + max_size_side * i + (max_size_side / 2 - 10),
+                                               5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
+                text = tree_canvas.create_text(10 + space * spacei + max_size_side * i + (max_size_side / 2 - 10),
                                                y_child_st + 15,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
             else:
-                pts = [5 + space * i + max_size_side * i + max_size_side / 2, y_child_st,
-                       5 + space * i + max_size_side * i, y_child_st + 40,
-                       5 + space * i + max_size_side * (i + 1), y_child_st + 40]
+                pts = [5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st,
+                       5 + space * spacei + max_size_side * i, y_child_st + 40,
+                       5 + space * spacei + max_size_side * (i + 1), y_child_st + 40]
                 if len(state.children[i].children) == 0:
-                    poly[i] = tree_canvas.create_rectangle(5 + space * i + max_size_side * i, y_child_st,
-                                                 5 + space * i + max_size_side * (i + 1),
+                    poly[i] = tree_canvas.create_rectangle(5 + space * spacei + max_size_side * i, y_child_st,
+                                                 5 + space * spacei + max_size_side * (i + 1),
                                                  y_child_st + 40, fill="#189DE4")
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#6200EE")
                     tree_canvas.tag_bind(poly[i], '<Button-1>',
                                          lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)],depth+1 ,tree_canvas,
                                                                   top))
-                tup.append((5 + space * i + max_size_side * i,
-                            5 + space * i + max_size_side * (i + 1)))
+                tup.append((5 + space * spacei + max_size_side * i,
+                            5 + space * spacei + max_size_side * (i + 1)))
                 line = tree_canvas.create_line(arrow_st_pt[0], arrow_st_pt[1],
-                                              5 + space * i + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
-                text = tree_canvas.create_text(5 + space * i + max_size_side * i + (max_size_side / 2 - 10),
+                                              5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st, fill="#01B636", width=2)
+                text = tree_canvas.create_text(5 + space * spacei + max_size_side * i + (max_size_side / 2 - 10),
                                                y_child_st + 20,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
