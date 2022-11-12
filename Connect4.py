@@ -73,7 +73,7 @@ class game:
         self.Mini_Max_Depth_text = StringVar(self.root,"2")
         self.tree_button = None
         self.without_prun = True
-
+        self.pause= False
 
     def draw(self, i):
         mo = StateMocker(0)
@@ -119,6 +119,10 @@ class game:
                                          stary + (49.5 * self.scale), fill="", outline=self.yellow_border, width="2")
             self.board[(self.board_height - 1) - self.col[i]][i] = 2
         self.col[i] += 1
+        self.pause =not self.pause
+        if self.pause:
+            self.hover_clear()
+            self.mycanvas.update()
         finshed = True
         for temp in self.col:
             if temp < self.board_height:
@@ -139,6 +143,8 @@ class game:
                 else:
                     temp, column2, state = start2_minmax(self.board, self.Mini_Max_Depth,-math.inf,math.inf, True)
                 self.draw(column2)
+                if not self.pause:
+                    self.hover_draw(i)
 
     def hover_clear(self):
         for j in range(0, self.board_width):
@@ -148,39 +154,40 @@ class game:
                                       fill=self.background_color, width="0")
 
     def hover_draw(self, i):
-        starx = i * (2 + self.square_length) + (self.star_x_shift)
-        y = 0
-        stary = (self.star_y_shift)
-        self.hover_clear()
-        x = i * (2 + self.square_length)
-        if (self.color):
-            self.mycanvas.create_oval(x + 1, y + 1, x + (self.square_length) - 2, y + (self.square_length) - 2,
-                                      fill=self.red_border, width="0")
-            self.mycanvas.create_oval(x + self.circle_scale, y + self.circle_scale,
-                                      x + (self.square_length) - self.circle_scale - 1,
-                                      y + (self.square_length) - self.circle_scale - 1, fill=self.red_tile,
-                                      outline=self.background_color, width="0", )
-            self.mycanvas.create_polygon(starx + (25 * self.scale), stary + (2.5 * self.scale),
-                                         starx + (10 * self.scale),
-                                         stary + (49.5 * self.scale), starx + (47.5 * self.scale),
-                                         stary + (19.5 * self.scale),
-                                         starx + (2.5 * self.scale), stary + (19.5 * self.scale),
-                                         starx + (40 * self.scale),
-                                         stary + (49.5 * self.scale), fill="", outline=self.red_border, width="2")
-        else:
-            self.mycanvas.create_oval(x + 1, y + 1, x + (self.square_length) - 2, y + (self.square_length) - 2,
-                                      fill=self.yellow_border, width="0")
-            self.mycanvas.create_oval(x + self.circle_scale, y + self.circle_scale,
-                                      x + (self.square_length) - self.circle_scale - 1,
-                                      y + (self.square_length) - self.circle_scale - 1, fill=self.yellow_tile,
-                                      outline=self.background_color, width="0", )
-            self.mycanvas.create_polygon(starx + (25 * self.scale), stary + (2.5 * self.scale),
-                                         starx + (10 * self.scale),
-                                         stary + (49.5 * self.scale), starx + (47.5 * self.scale),
-                                         stary + (19.5 * self.scale),
-                                         starx + (2.5 * self.scale), stary + (19.5 * self.scale),
-                                         starx + (40 * self.scale),
-                                         stary + (49.5 * self.scale), fill="", outline=self.yellow_border, width="2")
+        if not self.pause:
+            starx = i * (2 + self.square_length) + (self.star_x_shift)
+            y = 0
+            stary = (self.star_y_shift)
+            self.hover_clear()
+            x = i * (2 + self.square_length)
+            if (self.color):
+                self.mycanvas.create_oval(x + 1, y + 1, x + (self.square_length) - 2, y + (self.square_length) - 2,
+                                          fill=self.red_border, width="0")
+                self.mycanvas.create_oval(x + self.circle_scale, y + self.circle_scale,
+                                          x + (self.square_length) - self.circle_scale - 1,
+                                          y + (self.square_length) - self.circle_scale - 1, fill=self.red_tile,
+                                          outline=self.background_color, width="0", )
+                self.mycanvas.create_polygon(starx + (25 * self.scale), stary + (2.5 * self.scale),
+                                             starx + (10 * self.scale),
+                                             stary + (49.5 * self.scale), starx + (47.5 * self.scale),
+                                             stary + (19.5 * self.scale),
+                                             starx + (2.5 * self.scale), stary + (19.5 * self.scale),
+                                             starx + (40 * self.scale),
+                                             stary + (49.5 * self.scale), fill="", outline=self.red_border, width="2")
+            else:
+                self.mycanvas.create_oval(x + 1, y + 1, x + (self.square_length) - 2, y + (self.square_length) - 2,
+                                          fill=self.yellow_border, width="0")
+                self.mycanvas.create_oval(x + self.circle_scale, y + self.circle_scale,
+                                          x + (self.square_length) - self.circle_scale - 1,
+                                          y + (self.square_length) - self.circle_scale - 1, fill=self.yellow_tile,
+                                          outline=self.background_color, width="0", )
+                self.mycanvas.create_polygon(starx + (25 * self.scale), stary + (2.5 * self.scale),
+                                             starx + (10 * self.scale),
+                                             stary + (49.5 * self.scale), starx + (47.5 * self.scale),
+                                             stary + (19.5 * self.scale),
+                                             starx + (2.5 * self.scale), stary + (19.5 * self.scale),
+                                             starx + (40 * self.scale),
+                                             stary + (49.5 * self.scale), fill="", outline=self.yellow_border, width="2")
 
     def draw_line(self,i1,j1,i2,j2,color):
         x1 = i1 * (2 + self.square_length) + (self.square_length)/2
@@ -266,6 +273,7 @@ class game:
         self.draw_main_menu()
 
     def draw_board(self):
+        self.pause=False
         self.board_width=int(self.board_width_text.get())
         self.board_height=int(self.board_height_text.get())
         self.Mini_Max_Depth=int(self.Mini_Max_Depth_text.get())
