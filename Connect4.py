@@ -4,7 +4,6 @@ from typing import List, Tuple
 
 from heusrtic import *
 from State import State
-from alpha_beta import *
 
 
 class StateMocker:
@@ -137,11 +136,11 @@ class game:
             self.color = not self.color
             if (not self.color):
                 if(self.without_prun):
-                    temp, column2, state = start_minmax(self.board, self.Mini_Max_Depth, True)
+                    temp, column2, state = start_minmax(self.board, self.Mini_Max_Depth,None,None, True)
                     print(temp)
                     print(column2)
                 else:
-                    temp, column2, state = start2_minmax(self.board, self.Mini_Max_Depth,-math.inf,math.inf, True)
+                    temp, column2, state = start_minmax(self.board, self.Mini_Max_Depth,-math.inf,math.inf, True)
                 self.draw(column2)
                 if not self.pause:
                     self.hover_draw(i)
@@ -384,7 +383,11 @@ class game:
         n = len(state.children)
         y_child_st = 600
         max_size_side = 80
-        space = (1500 - max_size_side * n - 10) // (n - 1)
+        space = 0
+        if n ==1:
+            space = 1500/2
+        else:
+            space = (1500 - max_size_side * n - 10) // (n - 1)
         poly: list = [x for x in range(n)]
         tup: List[Tuple[int, int]] = []
         for i in range(n):
