@@ -227,6 +227,5 @@ class State:
 
 
         self.hvalue = h
-        print("hahahaha", h)
         return h
 
