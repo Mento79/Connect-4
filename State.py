@@ -22,7 +22,7 @@ class State:
             self.NoColomns = prevState.NoColomns
             self.NoBitsOfNoC = prevState.NoBitsOfNoC
 
-            self.A = copy.deepcopy(prevState.A)
+            self.A: bitarray = copy.deepcopy(prevState.A)
             self.addToColomn(where, what)
 
 
@@ -229,3 +229,5 @@ class State:
         self.hvalue = h
         return h
 
+    def getLong(self):
+        return self.bitsToInt(self.A)

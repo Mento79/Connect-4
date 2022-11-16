@@ -38,9 +38,12 @@ def get_valid_locations(Board:State):
 #     board[row][col] = piece
 
 
+statesDict = {}
 
 def start_minmax(Board,depth,alpha, beta ,maximing_player):
     state = State.State(Board)
+    statesDict.clear()
+
     time_before= round(time.time() * 1000)
     value, Column = mini_max(state,depth,alpha, beta ,maximing_player)
     time_after= round(time.time() * 1000)
@@ -51,8 +54,13 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
     valid_location = get_valid_locations(Board)
     if depth == 0 or len(valid_location) == 0:
         return Board.heuristic(), 0
+    h = statesDict.get(Board.getLong(), None)
+    if h is not None:
+        return h
+
     if maximizing_player:
         value = -math.inf
+        Column = valid_location[0]
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
             b_copy = State.State(None,Board,col2,1)
@@ -66,9 +74,11 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
                 if (beta <= alpha):
                     break
         Board.hvalue = value
+        statesDict[Board.getLong()] = (value, Column)
         return value, Column
     else:
         value = math.inf
+        Column = valid_location[0]
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
             b_copy = State.State(None,Board, col2, 0)
@@ -82,4 +92,5 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
                 if (beta <= alpha):
                     break
         Board.hvalue = value
+        statesDict[Board.getLong()] = (value, Column)
         return value, Column
