@@ -43,6 +43,24 @@ class State:
                 else:
                     self.addToColomn(i, board[j][i]-1)
 
+    def getBoard(self):
+        to = []
+        for i in range(0, self.NoColomns):
+            start = i * self.NoBitsOfNoC
+            to.append(self.bitsToInt(self.A[start: start+self.NoBitsOfNoC]))
+
+        board = [[0 for i in range(self.NoColomns)] for j in range(self.NoRows)]
+
+        for j in range(self.NoColomns):
+            for i in range(to[j]):
+                index = self.NoColomns * (self.NoBitsOfNoC + i) + j
+                board[self.NoRows-i-1][j] = self.A[index]+1
+        return board
+
+
+
+
+
     def addToColomn(self, where: int, what):
         start = self.NoBitsOfNoC * where
         inwhere = self.bitsToInt(self.A[start:start + self.NoBitsOfNoC])
