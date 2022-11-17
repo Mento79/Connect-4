@@ -54,16 +54,19 @@ def start_minmax(Board,depth,alpha, beta ,maximing_player):
     value, Column = mini_max(state,depth,alpha, beta ,maximing_player)
     time_after= round(time.time() * 1000)
     print("Time Taken : ",time_after-time_before)
+    print("Number of nodes : ",len(statesDict))
     return value, Column, state
 
 def mini_max(Board:State, depth,alpha, beta, maximizing_player):
-    valid_location = get_valid_locations(Board)
-    if depth == 0 or len(valid_location) == 0:
-        return Board.heuristic(), 0
     h = statesDict.get(Board.getLong(), None)
     if h is not None:
         res = (h.hvalue, h.colomn)
         return res
+
+    valid_location = get_valid_locations(Board)
+    if depth == 0 or len(valid_location) == 0:
+        statesDict[Board.getLong()] = Board
+        return Board.heuristic(), 0
 
     if maximizing_player:
         value = -math.inf
