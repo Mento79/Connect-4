@@ -23,14 +23,9 @@ import State
 
 def get_valid_locations(Board:State):
     valid_locations = []
-    if(Board.NoColomns==7):
-        for col in [3,4,2,5,1,6,0]:
-            if Board.check_column(col):
-                valid_locations.append(col)
-    else:
-        for col in range(Board.NoColomns):
-            if Board.check_column(col):
-                valid_locations.append(col)
+    for col in range(Board.NoColomns):
+        if Board.check_column(col):
+            valid_locations.append(col)
     return valid_locations
 
 

@@ -419,6 +419,7 @@ class game:
                                                y_child_st + 15,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
+                self.draw_small_board(5 + space * spacei + max_size_side * i,y_child_st + 40,10,tree_canvas,state.children[i])
             else:
                 pts = [5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st,
                        5 + space * spacei + max_size_side * i, y_child_st + 40,
@@ -427,8 +428,14 @@ class game:
                     poly[i] = tree_canvas.create_rectangle(5 + space * spacei + max_size_side * i, y_child_st,
                                                  5 + space * spacei + max_size_side * (i + 1),
                                                  y_child_st + 40, fill="#189DE4")
+                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 40, 10, tree_canvas,
+                                          state.children[i])
+
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#6200EE")
+                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 40, 10, tree_canvas,
+                                          state.children[i])
+
                     tree_canvas.tag_bind(poly[i], '<Button-1>',
                                          lambda e: self.draw_tree(state.children[self.get_idx(e.x, tup)],depth+1 ,tree_canvas,
                                                                   top))
@@ -440,6 +447,24 @@ class game:
                                                y_child_st + 20,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
+    def draw_small_board(self,x,y,size,canvas,state):
+        board=state.getBoard()
+        for i in range(0, self.board_height):
+            y1 = i * (2 + size) + y
+            for j in range(0, self.board_width):
+                x1 = j * (2 + size) +x
+                canvas.create_rectangle(x1, y1, x1 + size, y1 + size,
+                                               outline=self.board_color, fill=self.board_color, width="2")
+                if board[i][j]==0:
+                    canvas.create_oval(x1 + 1, y1 + 1, x1 + size - 1, y1 + size - 1,
+                                          fill=self.background_color, width="0")
+                elif board[i][j]==1:
+                    canvas.create_oval(x1 + 1, y1 + 1, x1 + size - 1, y1 + size - 1,
+                                          fill=self.red_border, width="0")
+                else:
+                    canvas.create_oval(x1 + 1, y1 + 1, x1 + size - 1, y1 + size - 1,
+                                          fill=self.yellow_border, width="0")
+
 
 
     def changeOnHover(self, button):
