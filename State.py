@@ -15,8 +15,8 @@ class State:
         else:
             self.parent = prevState
             self.children: list[State] = []
-            self.parent.children.append(self)
             self.hvalue = None
+            self.colomn = None
 
             self.NoRows = prevState.NoRows
             self.NoColomns = prevState.NoColomns
@@ -35,6 +35,7 @@ class State:
         self.parent: State = None
         self.children: list[State] = []
         self.hvalue = None
+        self.colomn = None
 
         for i in range(self.NoColomns):
             for j in range(self.NoRows-1, -1 , -1):

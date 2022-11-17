@@ -40,6 +40,17 @@ def get_valid_locations(Board:State):
 
 statesDict = {}
 
+def getState(Board:State.State, col, player):
+    child = State.State(None, Board, col, player)
+    h = statesDict.get(child.getLong(), None)
+    if h is not None:
+        Board.children.append(h)
+        return h
+    else:
+        Board.children.append(child)
+        return child
+
+
 def start_minmax(Board,depth,alpha, beta ,maximing_player):
     state = State.State(Board)
     statesDict.clear()
@@ -56,15 +67,15 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
         return Board.heuristic(), 0
     h = statesDict.get(Board.getLong(), None)
     if h is not None:
-        Board.hvalue = h[0]
-        return h
+        res = (h.hvalue, h.colomn)
+        return res
 
     if maximizing_player:
         value = -math.inf
         Column = valid_location[0]
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
-            b_copy = State.State(None,Board,col2,1)
+            b_copy = getState(Board,col2,1)
             # drop_piece(b_copy, row, col2, 2)
             new_score, temp = mini_max(b_copy, depth - 1,alpha, beta, False)
             if (new_score > value):
@@ -75,14 +86,15 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
                 if (beta <= alpha):
                     break
         Board.hvalue = value
-        statesDict[Board.getLong()] = (value, Column)
+        Board.colomn = Column
+        statesDict[Board.getLong()] = Board
         return value, Column
     else:
         value = math.inf
         Column = valid_location[0]
         for col2 in valid_location:
             # row = Board.get_next_row(col2)
-            b_copy = State.State(None,Board, col2, 0)
+            b_copy = getState(Board, col2, 0)
             # drop_piece(b_copy, row, col2, 1)
             new_score, temp = mini_max(b_copy, depth - 1, alpha, beta, True)
             if (new_score < value):
@@ -93,5 +105,6 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
                 if (beta <= alpha):
                     break
         Board.hvalue = value
-        statesDict[Board.getLong()] = (value, Column)
+        Board.colomn = Column
+        statesDict[Board.getLong()] = Board
         return value, Column
