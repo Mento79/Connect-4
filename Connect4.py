@@ -77,12 +77,6 @@ class game:
     def draw(self, i):
         mo = StateMocker(0)
         state:State = None
-        if self.tree_button is None:
-            self.tree_button = Button(self.root, text='Tree',
-                             command=lambda: [self.draw_tree(state)],
-                             bg=self.background_color, fg="#6200EE", height=2, width=10)
-            self.tree_button.place(x=10, y=80)
-            self.changeOnHover(self.tree_button)
         x = i * (2 + self.square_length)
         starx = i * (2 + self.square_length) + (self.star_x_shift)
         y = ((self.board_height - 1) - self.col[i]) * (2 + self.square_length) + self.square_length
@@ -145,6 +139,13 @@ class game:
                 self.draw(column2)
                 if not self.pause:
                     self.hover_draw(i)
+        if self.tree_button is not None:
+            self.tree_button.destroy()
+        self.tree_button = Button(self.root, text='Tree',
+                                  command=lambda: [self.draw_tree(state)],
+                                  bg=self.background_color, fg="#6200EE", height=2, width=10)
+        self.tree_button.place(x=10, y=80)
+        self.changeOnHover(self.tree_button)
 
     def hover_clear(self):
         for j in range(0, self.board_width):
