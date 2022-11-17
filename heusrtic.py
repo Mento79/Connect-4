@@ -56,6 +56,7 @@ def mini_max(Board:State, depth,alpha, beta, maximizing_player):
         return Board.heuristic(), 0
     h = statesDict.get(Board.getLong(), None)
     if h is not None:
+        Board.hvalue = h[0]
         return h
 
     if maximizing_player:
