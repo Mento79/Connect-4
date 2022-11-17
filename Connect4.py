@@ -334,8 +334,8 @@ class game:
             messagebox.showwarning("Error", "Please Enter Height between 6 and 17")
         elif int(self.board_width_text.get())<7 or  int(self.board_width_text.get())>17:
             messagebox.showwarning("Error", "Please Enter Width between 7 and 17")
-        # elif int(self.Mini_Max_Depth_text.get())<##Min_Depth or  int(self.Mini_Max_Depth_text.get())>##Max_Depth:
-        #     messagebox.showwarning("Error", "Please Enter Height between 6 and 17")
+        elif int(self.Mini_Max_Depth_text.get())<1 or  int(self.Mini_Max_Depth_text.get())>12:
+            messagebox.showwarning("Error", "Please Enter Depth between 1 and 12")
         else:
             for obj in list_destroy:
                 obj.destroy()
@@ -367,21 +367,23 @@ class game:
         text = None
         line = None
         if len(state.children) == 0:
-            tree_canvas.create_rectangle(700, 60, 800, 100, fill="#03DAC6")
-            text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
+            tree_canvas.create_rectangle(700, 100, 800, 140, fill="#03DAC6")
+            text = tree_canvas.create_text(740, 120, text=str(state.hvalue),
                                            font='Calibri 10', anchor="w", fill="white")
         elif max_par:
-            pts = [750, 60, 700, 104, 800, 105]
+            pts = [750, 100, 700, 145, 800, 145]
             poly = tree_canvas.create_polygon(pts, fill="#6200EE")
-            text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
+            text = tree_canvas.create_text(740, 120, text=str(state.hvalue),
                                            font='Calibri 9', anchor="w", fill="white")
-            arrow_st_pt = (750, 100)
+            arrow_st_pt = (750, 140)
+            self.draw_small_board(710,20, 10, tree_canvas,state)
         else:
-            pts = [700, 60, 800, 60, 750, 105]
+            pts = [700, 100, 800, 100, 750, 145]
             poly = tree_canvas.create_polygon(pts, fill="#CF6679")
-            text = tree_canvas.create_text(740, 80, text=str(state.hvalue),
+            text = tree_canvas.create_text(740, 120, text=str(state.hvalue),
                                            font='Calibri 9', anchor="w", fill="white")
-            arrow_st_pt = (750, 105)
+            self.draw_small_board(710,20, 10, tree_canvas,state)
+            arrow_st_pt = (750, 145)
         n = len(state.children)
         y_child_st = 600
         max_size_side = 80
@@ -419,7 +421,7 @@ class game:
                                                y_child_st + 15,
                                                text=str(state.children[i].hvalue),
                                                font='Calibri 9', anchor="w", fill="white")
-                self.draw_small_board(5 + space * spacei + max_size_side * i,y_child_st + 40,10,tree_canvas,state.children[i])
+                self.draw_small_board(5 + space * spacei + max_size_side * i,y_child_st + 50 ,10,tree_canvas,state.children[i])
             else:
                 pts = [5 + space * spacei + max_size_side * i + max_size_side / 2, y_child_st,
                        5 + space * spacei + max_size_side * i, y_child_st + 40,
@@ -428,12 +430,12 @@ class game:
                     poly[i] = tree_canvas.create_rectangle(5 + space * spacei + max_size_side * i, y_child_st,
                                                  5 + space * spacei + max_size_side * (i + 1),
                                                  y_child_st + 40, fill="#189DE4")
-                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 40, 10, tree_canvas,
+                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 50, 10, tree_canvas,
                                           state.children[i])
 
                 else:
                     poly[i] = tree_canvas.create_polygon(pts, fill="#6200EE")
-                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 40, 10, tree_canvas,
+                    self.draw_small_board(5 + space * spacei + max_size_side * i, y_child_st + 50, 10, tree_canvas,
                                           state.children[i])
 
                     tree_canvas.tag_bind(poly[i], '<Button-1>',
